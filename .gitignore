@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# PyCharm configuration files
+.idea/
+
+# Test files for scratch.py
+test.pkl

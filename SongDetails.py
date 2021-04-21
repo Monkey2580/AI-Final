@@ -1,6 +1,7 @@
-class SongsDetails():
-    def __init__(self,Title,Artist,Album,Duration):
-        self.Title=Title
-        self.Artist=Artist
-        self.Album=Album
-        self.Duration=Duration
+class SongsDetails:
+
+    def __init__(self, title, artist, album, duration):
+        self.title = title
+        self.artist = artist
+        self.album = album
+        self.duration = duration
