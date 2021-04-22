@@ -1,4 +1,6 @@
-import  pickle
+import pickle
+import pandas
+from tabulate import tabulate
 
 class scratch:
 
@@ -34,10 +36,17 @@ class scratch:
         dataFile.close()
 
 
+class pandasTest:
+
+    def __init__(self):
+        self.data = pandas.read_csv("user-song-rating.csv", sep=";", header=0, names=["user", "song_id", "rating"])
+        # display head of data (n rows)
+        print(tabulate(self.data.head(4), headers="keys", tablefmt='psql'))
+        df = pandas.DataFrame(self.data)
+
+
 if __name__ == "__main__":
     """
     For testing blocks of code and dicking around in general
     """
-    scratch = scratch()
-    #scratch.exportData()
-    scratch.importData()
+    test = pandasTest()
