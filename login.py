@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dashboard import Ui_dashboardObject
+import pandas as pd
 
 
 class Ui_MainWindow(object):
@@ -63,14 +64,27 @@ class Ui_MainWindow(object):
 
     def dashboardscreen(self):
         username = self.login_username_input.text()
-        if username == 'aditya' or username == 'ADITYA':
-            self.dashboardObject = QtWidgets.QMainWindow()
-            self.message = username
-            self.ui = Ui_dashboardObject(self.message)
-            self.ui.setupUi(self.dashboardObject)
-            self.dashboardObject.show()
-        else:
-            print('username not found')
+        Userlower = username.lower()
+        df = pd.read_csv("Userlist.csv", sep=';')
+        for i in df.iloc[:, 0].str.lower():
+            if Userlower == i:
+                session = username
+                self.dashboardObject = QtWidgets.QMainWindow()
+                self.message = session
+                self.ui = Ui_dashboardObject(self.message)
+                self.ui.setupUi(self.dashboardObject)
+                self.dashboardObject.show()
+                break
+            else:
+                print('username not found')
+        # if username == 'adit':
+        #     self.dashboardObject = QtWidgets.QMainWindow()
+        #     self.message = username
+        #     self.ui = Ui_dashboardObject(self.message)
+        #     self.ui.setupUi(self.dashboardObject)
+        #     self.dashboardObject.show()
+        # else:
+        #     print('username not found')
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
