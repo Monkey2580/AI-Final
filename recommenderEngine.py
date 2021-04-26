@@ -64,14 +64,13 @@ class engine:
         :return:
         """
         rowIndex = 0
-        entryFound = False
         userRatingEntry = self.userRatings.drop("Rating", 1)  # copy userRating dataframe without rating column
-        userRatingEntry = userRatingEntry.isin([user, song])
-        userRatingEntry = userRatingEntry.to_numpy()
+        userRatingEntry = userRatingEntry.isin([user, song])  # check if user and song is in dataFrame, returns tuple
+        userRatingEntry = userRatingEntry.to_numpy()  # reformat to 2D tuple
         for row in userRatingEntry:
             #print(row[0])
             #print(row[1], "\n")
-            if row[0] and row[1]:  # if a user has already rated the specified song
+            if row[0] and row[1]:  # if a user's song rating entry exists
                 return self.userRatings.loc[rowIndex]
             else:
                 rowIndex += 1
@@ -153,21 +152,21 @@ class engine:
         :param n: Int, (max) number of recommendations
         :return: Tuple[List()]
         """
-        recommendationTuple = []
+        recommendationTuple = []  # Return variable
 
-        nearestUsers = self.nearestNeighbours(user, n)
-        neighbourRatings = self.ratingMatrix[self.ratingMatrix.index.isin(nearestUsers)]
-        avgRating = neighbourRatings.apply(numpy.nanmean).dropna()
-        listenedSongs = self.ratingMatrix.transpose()[user].dropna().index
-        avgRating = avgRating[~avgRating.index.isin(listenedSongs)]
-        recommendations = avgRating.sort_values(ascending=False).index[:n]
-        reccomendationList = pandas.Series(recommendations).apply(self.getSongByID)
+        nearestUsers = self.nearestNeighbours(user, n)  # Find nearest neighbours to target user
+        neighbourRatings = self.ratingMatrix[self.ratingMatrix.index.isin(nearestUsers)]  # Get ratings from nearest neigbours
+        avgRating = neighbourRatings.apply(numpy.nanmean).dropna()  # Average ratings out from neighbours, drop any NaN entries
+        listenedSongs = self.ratingMatrix.transpose()[user].dropna().index  # Get target user's already rated songs
+        avgRating = avgRating[~avgRating.index.isin(listenedSongs)]  # Get values of songs that are not rated by target
+        recommendations = avgRating.sort_values(ascending=False).index[:n]  # Sort remaining values in descending order
+        reccomendationList = pandas.Series(recommendations).apply(self.getSongByID)  # Pair SongIDs to song metadata
 
         # Reformat to basic tuple
         for recommendation in reccomendationList:
             recommendationTuple.append(recommendation)
 
-        return recommendationTuple  # Returns recommendation in desending order
+        return recommendationTuple  # Return recommendations
 
     def nearestNeighbours(self, user, n):
         """
@@ -204,6 +203,15 @@ class engine:
             distance = numpy.NaN
         return distance
 
+    def saveData(self):
+        """
+        Saves everything to csv file(s).
+        Call this before exiting the program or changes to data will be lost.
+        :return:
+        """
+        self.userRatings.to_csv('user-song-rating-updated.csv', header=True, sep=";", index=False)  # replace file name with actual user-song-rating
+        return
+
 
 if __name__ == "__main__":
     """
@@ -211,27 +219,30 @@ if __name__ == "__main__":
     It is not designed to be run directly.
     Below is an example of an implementation.
     """
+    # Initialize engine
     engine = engine()
-    #engine.engineTestMode()
     engine.loadData()
     engine.buildRatingMatrix()
     print(engine.ratingMatrix, "\n")
     #print(engine.userRatings, "\n")
 
+    # Generate recommendation for UserId: u1
     recommendations = engine.generateRecommendations("u1", 3)
     print(recommendations, "\n")
 
+    # Get User u6 rating for song 125, handle None type return
     userRatingTest = engine.getUserRating("u6", 125)
     if userRatingTest is None:
-        print("User has not rated that song yet")
+        print("User has not rated that song yet", "\n")
     else:
-        print(userRatingTest.Rating)
+        print(userRatingTest.Rating, "\n")
 
+    # Update/Add entries to user-song-rating
+    engine.updateUserRating("u1", 101, 5)
+    print(engine.userRatings, "\n")
 
-    """
     engine.updateUserRating("u5", 114, 4)
     print(engine.userRatings, "\n")
 
-    engine.updateUserRating("u1", 101, 5)
-    print(engine.userRatings, "\n")
-    """
+    # Save changes to file
+    engine.saveData()

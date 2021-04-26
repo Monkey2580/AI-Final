@@ -133,3 +133,6 @@ dmypy.json
 
 # Test files for scratch.py
 test.pkl
+
+# Trash files
+user-song-rating-updated.csv
