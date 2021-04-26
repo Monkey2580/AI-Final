@@ -64,21 +64,6 @@ text-align: center;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="search_input">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>261</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius:10px;
-background-color:#c4c4c4;
-</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
@@ -117,6 +102,16 @@ border-radius:10px;</string>
     </property>
     <property name="text">
      <string>SEARCH</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_songSearch">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>11</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
     </property>
    </widget>
   </widget>

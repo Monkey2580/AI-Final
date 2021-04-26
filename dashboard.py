@@ -9,9 +9,45 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit, QCompleter
+from PyQt5.QtGui import QStandardItem, QStandardItemModel, QFont
+import pandas as pd
+from PyQt5.QtCore import Qt
+
+df = pd.read_csv("listSongsCSV.csv", sep=',')
 
 
 class Ui_dashboardObject(object):
+
+    # for widget in self.widgets:
+    #     if text.lower() in widget.name.lower():
+    #         widget.show()
+    #     else:
+    #         widget.hide()
+
+    def update_display(self, text):
+        song_title = self.lineEdit_songSearch
+        song_title_lower = song_title.lower()
+        for song in df.iloc[:, 1].str.lower():
+            if song_title_lower in song:
+                print('song found')
+            else:
+                print('song not found')
+
+    def closeDashboardPage(self, dashboardObject):
+        dashboardObject.close()
+
+    def retranslateUi(self, dashboardObject):
+        _translate = QtCore.QCoreApplication.translate
+        dashboardObject.setWindowTitle(
+            _translate("dashboardObject", "MainWindow"))
+        self.logout_btn.setText(_translate("dashboardObject", "LOGOUT"))
+        self.username_label.setText(
+            _translate("dashboardObject", self.message))
+        self.label_11.setText(_translate(
+            "dashboardObject", "WELCOME TO MAIN DASHBOARD"))
+        self.search_btn.setText(_translate("dashboardObject", "SEARCH"))
+
     def __init__(self, message):
         self.message = message
         print('currenct user:'+message)
@@ -35,12 +71,6 @@ class Ui_dashboardObject(object):
                                           "text-align: center;")
         self.username_label.setAlignment(QtCore.Qt.AlignCenter)
         self.username_label.setObjectName("username_label")
-        self.search_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.search_input.setGeometry(QtCore.QRect(40, 10, 261, 41))
-        self.search_input.setStyleSheet("border-radius:10px;\n"
-                                        "background-color:#c4c4c4;\n"
-                                        "")
-        self.search_input.setObjectName("search_input")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         self.label_11.setGeometry(QtCore.QRect(-20, 130, 831, 41))
         font = QtGui.QFont()
@@ -55,6 +85,16 @@ class Ui_dashboardObject(object):
         self.search_btn.setStyleSheet("border:1px solid black;\n"
                                       "border-radius:10px;")
         self.search_btn.setObjectName("search_btn")
+        self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_songSearch.setGeometry(QtCore.QRect(20, 11, 271, 41))
+        mainLayout = QVBoxLayout()
+        self.lineEdit_songSearch.setObjectName("lineEdit_songSearch")
+        self.lineEdit_songSearch.editingFinished.connect(self.update_display)
+
+        self.completer = QCompleter(df.Title)
+        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.lineEdit_songSearch.setCompleter(self.completer)
+
         dashboardObject.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(dashboardObject)
@@ -62,19 +102,29 @@ class Ui_dashboardObject(object):
         self.logout_btn.clicked.connect(
             lambda: self.closeDashboardPage(dashboardObject))
 
-    def closeDashboardPage(self, dashboardObject):
-        dashboardObject.close()
+#     def searchSongs(self, dashboardObject):
+#         song_title = self.search_input.text()
+#         song_title_lower = song_title.lower()
+#         df = pd.read_csv("listSongsCSV.csv", sep=',')
+#         for i in df.iloc[:, 1].str.lower():
+#             if song_title_lower in i:
+#                 completer = QCompleter(df)
+#                 print('song found' + song_title)
+#                 # line edit and add auto complete
+#                 self.lineedit = QLineEdit()
+#                 self.lineedit.setCompleter(completer)
+#                 dashboardObject.addWidget(self.lineedit, 0, 0)
 
-    def retranslateUi(self, dashboardObject):
-        _translate = QtCore.QCoreApplication.translate
-        dashboardObject.setWindowTitle(
-            _translate("dashboardObject", "MainWindow"))
-        self.logout_btn.setText(_translate("dashboardObject", "LOGOUT"))
-        self.username_label.setText(
-            _translate("dashboardObject", self.message))
-        self.label_11.setText(_translate(
-            "dashboardObject", "WELCOME TO MAIN DASHBOARD"))
-        self.search_btn.setText(_translate("dashboardObject", "SEARCH"))
+#                 selected_song = song_title
+
+#                 # self.dashboardObject = QtWidgets.QMainWindow()
+#                 # self.message = selected_song
+#                 # self.ui = Ui_dashboardObject(self.message)
+#                 # self.ui.setupUi(self.dashboardObject)
+#                 # self.dashboardObject.show()
+#                 break
+#             else:
+#                 print('song title not found')
 
 
 if __name__ == "__main__":

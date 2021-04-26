@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
         Userlower = username.lower()
         df = pd.read_csv("Userlist.csv", sep=';')
         for i in df.iloc[:, 0].str.lower():
-            if Userlower == i:
+            if Userlower == str(i):
                 session = username
                 self.dashboardObject = QtWidgets.QMainWindow()
                 self.message = session
@@ -75,8 +75,7 @@ class Ui_MainWindow(object):
                 self.ui.setupUi(self.dashboardObject)
                 self.dashboardObject.show()
                 break
-            else:
-                print('username not found')
+
         # if username == 'adit':
         #     self.dashboardObject = QtWidgets.QMainWindow()
         #     self.message = username

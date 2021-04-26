@@ -276,6 +276,10 @@ background-color:transparent;</string>
     <property name="text">
      <string/>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="star2">
     <property name="geometry">
@@ -292,6 +296,10 @@ background-color:transparent;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="star3">
@@ -310,6 +318,10 @@ background-color:transparent;</string>
     <property name="text">
      <string/>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="star4">
     <property name="geometry">
@@ -327,6 +339,10 @@ background-color:transparent;</string>
     <property name="text">
      <string/>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="star5">
     <property name="geometry">
@@ -343,6 +359,10 @@ background-color:transparent;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
     </property>
    </widget>
   </widget>
