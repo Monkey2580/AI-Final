@@ -207,9 +207,14 @@ class Ui_mainSelectedSong(object):
 
     def goToHomePageHis(self, homePageHisWindow):
         get_username = self.user
+        get_song_name = self.message
+        get_rating = self.rating
         self.homePageHisWindow = QtWidgets.QMainWindow()
         self.username = get_username
-        self.ui = Ui_homePageHisWindow(self.username)
+        self.message = get_song_name
+        self.songRating = get_rating
+        self.ui = Ui_homePageHisWindow(
+            self.message, self.username, self.songRating)
         self.ui.setupUi(self.homePageHisWindow)
         self.homePageHisWindow.show()
         print('rating lagunya: ' + str(self.rating))

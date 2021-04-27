@@ -14,8 +14,11 @@ from recommenderEngine import engine
 
 class Ui_homePageHisWindow(object):
 
-    def __init__(self, username):
+    def __init__(self, message, username, songRating):
         self.username = username
+        self.message = message
+        self.songRating = songRating
+        print('ini ngeprint dari homePageHisUI: ' + self.message)
 
     def setupUi(self, homePageHisWindow):
         homePageHisWindow.setObjectName("homePageHisWindow")
@@ -80,11 +83,11 @@ class Ui_homePageHisWindow(object):
         geoRowSecond = 30
         secondRowCounter = 4
 
-        recommender = engine()
-        recommender.loadData()
+        self.recommender = engine()
+        self.recommender.loadData()
         print('self nya: ' + self.username)
-        recommender.buildRatingMatrix()
-        hasil_rekomendasi = recommender.generateRecommendations(
+        self.recommender.buildRatingMatrix()
+        hasil_rekomendasi = self.recommender.generateRecommendations(
             self.username, 8)
         print('hasilnya dibawah:')
         print(hasil_rekomendasi)
@@ -114,7 +117,10 @@ class Ui_homePageHisWindow(object):
                 if (secondRowCounter >= 8):
                     break
                 secondRowCounter += 1
-
+        song_id = self.recommender.getSongID(self.message)
+        self.recommender.updateUserRating(
+            self.username, song_id[0], self.songRating)
+        print(self.recommender.userRatings)
         # self.recommendedSong_1.setObjectName("recommendedSong_1")
         # self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
         # self.recommendedSong_2.setGeometry(QtCore.QRect(150, 290, 111, 101))
@@ -198,9 +204,13 @@ class Ui_homePageHisWindow(object):
         self.statusbar = QtWidgets.QStatusBar(homePageHisWindow)
         self.statusbar.setObjectName("statusbar")
         homePageHisWindow.setStatusBar(self.statusbar)
+        self.logout_btn.clicked.connect(self.logoutAndSave)
 
         self.retranslateUi(homePageHisWindow)
         QtCore.QMetaObject.connectSlotsByName(homePageHisWindow)
+
+    def logoutAndSave(self):
+        self.recommender.saveData()
 
     def retranslateUi(self, homePageHisWindow):
         _translate = QtCore.QCoreApplication.translate

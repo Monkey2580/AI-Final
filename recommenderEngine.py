@@ -142,6 +142,10 @@ class engine:
         album = self.songList.at[song_id, "AlbumName"]
         return title, artist, album
 
+    def getSongID(self, songName):
+        songID = self.songList[self.songList["Title"] == songName].index.values
+        return songID
+
     def userFavoriteSongs(self, user, n):
         """
         Get the specified user's top n rated songs
@@ -235,8 +239,8 @@ class engine:
         Call this before exiting the program or changes to data will be lost.
         :return:
         """
-        self.userRatings.to_csv('user-song-rating-updated.csv', header=True,
-                                sep=";", index=False)  # replace file name with actual user-song-rating
+        self.userRatings.to_csv('user-song-rating.csv', header=True, sep=";",
+                                index=False)  # replace file name with actual user-song-rating
         return
 
 
@@ -254,22 +258,24 @@ if __name__ == "__main__":
     #print(engine.userRatings, "\n")
 
     # Generate recommendation for UserId: u1
-    recommendations = engine.generateRecommendations("adit", 3)
+    recommendations = engine.generateRecommendations("u1", 3)
     print(recommendations, "\n")
 
     # Get User u6 rating for song 125, handle None type return
-    userRatingTest = engine.getUserRating("marcell", 125)
+    userRatingTest = engine.getUserRating("u6", 125)
     if userRatingTest is None:
         print("User has not rated that song yet", "\n")
     else:
         print(userRatingTest.Rating, "\n")
 
     # Update/Add entries to user-song-rating
-    engine.updateUserRating("adit", 101, 5)
+    engine.updateUserRating("u1", 101, 5)
     print(engine.userRatings, "\n")
 
-    engine.updateUserRating("marcell", 114, 4)
+    engine.updateUserRating("u5", 114, 4)
     print(engine.userRatings, "\n")
 
     # Save changes to file
     # engine.saveData()
+
+    print(engine.getSongID("Whistle"))
