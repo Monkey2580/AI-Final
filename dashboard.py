@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLine
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QFont
 import pandas as pd
 from PyQt5.QtCore import Qt
+from selectedSongUI import Ui_mainSelectedSong
 
 df = pd.read_csv("listSongsCSV.csv", sep=',')
 
@@ -25,14 +26,22 @@ class Ui_dashboardObject(object):
     #     else:
     #         widget.hide()
 
-    def update_display(self, text):
-        song_title = self.lineEdit_songSearch
+    def searchSongs(self, mainSelectedSong):
+        song_title = self.lineEdit_songSearch.text()
         song_title_lower = song_title.lower()
-        for song in df.iloc[:, 1].str.lower():
-            if song_title_lower in song:
-                print('song found')
-            else:
-                print('song not found')
+        self.mainSelectedSong = QtWidgets.QMainWindow()
+        self.message = song_title
+        self.ui = Ui_mainSelectedSong(self.message)
+        self.ui.setupUi(self.mainSelectedSong)
+        self.mainSelectedSong.show()
+
+    def update_display(self):
+        song_title = self.lineEdit_songSearch.text()
+        song_title_lower = song_title.lower()
+        # for song in df.iloc[:, 1].str.lower():
+        #     if song_title_lower in song:
+        #         print('song found')
+        #         break
 
     def closeDashboardPage(self, dashboardObject):
         dashboardObject.close()
@@ -85,6 +94,7 @@ class Ui_dashboardObject(object):
         self.search_btn.setStyleSheet("border:1px solid black;\n"
                                       "border-radius:10px;")
         self.search_btn.setObjectName("search_btn")
+        self.search_btn.clicked.connect(self.searchSongs)
         self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_songSearch.setGeometry(QtCore.QRect(20, 11, 271, 41))
         mainLayout = QVBoxLayout()
@@ -102,29 +112,7 @@ class Ui_dashboardObject(object):
         self.logout_btn.clicked.connect(
             lambda: self.closeDashboardPage(dashboardObject))
 
-#     def searchSongs(self, dashboardObject):
-#         song_title = self.search_input.text()
-#         song_title_lower = song_title.lower()
-#         df = pd.read_csv("listSongsCSV.csv", sep=',')
-#         for i in df.iloc[:, 1].str.lower():
-#             if song_title_lower in i:
-#                 completer = QCompleter(df)
-#                 print('song found' + song_title)
-#                 # line edit and add auto complete
-#                 self.lineedit = QLineEdit()
-#                 self.lineedit.setCompleter(completer)
-#                 dashboardObject.addWidget(self.lineedit, 0, 0)
-
-#                 selected_song = song_title
-
-#                 # self.dashboardObject = QtWidgets.QMainWindow()
-#                 # self.message = selected_song
-#                 # self.ui = Ui_dashboardObject(self.message)
-#                 # self.ui.setupUi(self.dashboardObject)
-#                 # self.dashboardObject.show()
-#                 break
-#             else:
-#                 print('song title not found')
+#
 
 
 if __name__ == "__main__":
