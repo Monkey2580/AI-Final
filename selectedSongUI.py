@@ -126,10 +126,75 @@ class Ui_mainSelectedSong(object):
         self.statusbar = QtWidgets.QStatusBar(mainSelectedSong)
         self.statusbar.setObjectName("statusbar")
         mainSelectedSong.setStatusBar(self.statusbar)
-
+        self.star1.clicked.connect(self.ratingFilledStars)
+        self.star2.clicked.connect(self.ratingFilledStars2)
+        self.star3.clicked.connect(self.ratingFilledStars3)
+        self.star4.clicked.connect(self.ratingFilledStars4)
+        self.star5.clicked.connect(self.ratingFilledStar5)
         self.retranslateUi(mainSelectedSong)
         QtCore.QMetaObject.connectSlotsByName(mainSelectedSong)
+        self.stars = [self.star1, self.star2, self.star3, self.star4, self.star5]
+        self.rating = 0
 
+    def ratingFilledStars(self):
+        self.star1.setStyleSheet(
+            "qproperty-icon: url(filledStar.png);"
+            "background-color:transparent;"
+        );
+        for i in range(1, 5):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(emptyStar.png);"
+                "background-color:transparent;"
+            );
+        self.rating = 1
+        print("Stars :",self.rating)
+    def ratingFilledStars2(self):
+        for i in range(0, 2):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(filledStar.png);"
+                "background-color:transparent;"
+            );
+        for i in range(2, 5):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(emptyStar.png);"
+                "background-color:transparent;"
+            );
+        self.rating = 2
+        print("Stars :",self.rating)
+    def ratingFilledStars3(self):
+        for i in range(0, 3):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(filledStar.png);"
+                "background-color:transparent;"
+            );
+        for i in range(3, 5):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(emptyStar.png);"
+                "background-color:transparent;"
+            );
+        self.rating = 3
+        print("Stars :",self.rating)
+    def ratingFilledStars4(self):
+        for i in range(0, 4):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(filledStar.png);"
+                "background-color:transparent;"
+            );
+        for i in range(4, 5):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(emptyStar.png);"
+                "background-color:transparent;"
+            );
+        self.rating = 4
+        print("Stars :",self.rating)
+    def ratingFilledStar5(self):
+        for i in range(0, 5):
+            self.stars[i].setStyleSheet(
+                "qproperty-icon: url(filledStar.png);"
+                "background-color:transparent;"
+            );
+        self.rating = 5
+        print("Stars :",self.rating)
     def retranslateUi(self, mainSelectedSong):
         _translate = QtCore.QCoreApplication.translate
         mainSelectedSong.setWindowTitle(
