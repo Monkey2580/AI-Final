@@ -129,6 +129,10 @@ class engine:
         album = self.songList.at[song_id, "AlbumName"]
         return title, artist, album
 
+    def getSongID(self, songName):
+        songID = self.songList[self.songList["Title"] == songName].index.values
+        return songID
+
     def userFavoriteSongs(self, user, n):
         """
         Get the specified user's top n rated songs
@@ -245,4 +249,6 @@ if __name__ == "__main__":
     print(engine.userRatings, "\n")
 
     # Save changes to file
-    engine.saveData()
+    # engine.saveData()
+
+    print(engine.getSongID("Whistle"))
