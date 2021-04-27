@@ -15,6 +15,7 @@ import pandas as pd
 from PyQt5.QtCore import Qt
 from selectedSongUI import Ui_mainSelectedSong
 
+
 df = pd.read_csv("listSongsCSV.csv", sep=',')
 
 
@@ -29,9 +30,14 @@ class Ui_dashboardObject(object):
     def searchSongs(self, mainSelectedSong):
         song_title = self.lineEdit_songSearch.text()
         song_title_lower = song_title.lower()
+
+        get_username = self.message
+        print('username will be sent: ' + get_username)
+
         self.mainSelectedSong = QtWidgets.QMainWindow()
         self.message = song_title
-        self.ui = Ui_mainSelectedSong(self.message)
+        self.username = get_username
+        self.ui = Ui_mainSelectedSong(self.message, self.username)
         self.ui.setupUi(self.mainSelectedSong)
         self.mainSelectedSong.show()
 
@@ -66,6 +72,7 @@ class Ui_dashboardObject(object):
         dashboardObject.resize(800, 600)
         dashboardObject.setMinimumSize(QtCore.QSize(800, 600))
         dashboardObject.setMaximumSize(QtCore.QSize(800, 600))
+
         self.centralwidget = QtWidgets.QWidget(dashboardObject)
         self.centralwidget.setObjectName("centralwidget")
         self.logout_btn = QtWidgets.QPushButton(self.centralwidget)

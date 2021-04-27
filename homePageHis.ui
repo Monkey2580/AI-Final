@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>homePageHisWindow</class>
+ <widget class="QMainWindow" name="homePageHisWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,22 +29,7 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="search_input">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>261</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius:10px;
-background-color:#c4c4c4;
-</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="username_label">
     <property name="geometry">
      <rect>
       <x>550</x>
@@ -122,28 +107,7 @@ border-radius:10px;</string>
      <string>Made For You</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">
-border-radius:10px;
- image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/next.png);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="history_btn">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -156,7 +120,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="recommendedSong_1">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -169,7 +133,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="recommendedSong_2">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -182,7 +146,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="recommendedSong_3">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -195,7 +159,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="recommendedSong_4">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -208,7 +172,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="recommendedSong_5">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -221,7 +185,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="recommendedSong_8">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -234,7 +198,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="recommendedSong_6">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -247,7 +211,7 @@ border-radius:10px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_11">
+   <widget class="QPushButton" name="recommendedSong_7">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -363,6 +327,33 @@ background-color:transparent;</string>
     <property name="icon">
      <iconset>
       <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_songSearch">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="search_btn">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>10</y>
+      <width>93</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border:1px solid black;
+border-radius:10px;</string>
+    </property>
+    <property name="text">
+     <string>SEARCH</string>
     </property>
    </widget>
   </widget>

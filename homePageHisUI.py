@@ -9,34 +9,33 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from recommenderEngine import engine
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
-        MainWindow.setMinimumSize(QtCore.QSize(800, 600))
-        MainWindow.setMaximumSize(QtCore.QSize(800, 600))
-        MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_homePageHisWindow(object):
+
+    def __init__(self, username):
+        self.username = username
+
+    def setupUi(self, homePageHisWindow):
+        homePageHisWindow.setObjectName("homePageHisWindow")
+        homePageHisWindow.resize(800, 600)
+        homePageHisWindow.setMinimumSize(QtCore.QSize(800, 600))
+        homePageHisWindow.setMaximumSize(QtCore.QSize(800, 600))
+        homePageHisWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.centralwidget = QtWidgets.QWidget(homePageHisWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.search_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.search_input.setGeometry(QtCore.QRect(30, 10, 261, 41))
-        self.search_input.setStyleSheet("border-radius:10px;\n"
-"background-color:#c4c4c4;\n"
-"")
-        self.search_input.setObjectName("search_input")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(550, 10, 121, 41))
-        self.label.setStyleSheet("background-color:#c4c4c4;\n"
-"border-radius:10px;\n"
-"text-align: center;")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
+        self.username_label = QtWidgets.QLabel(self.centralwidget)
+        self.username_label.setGeometry(QtCore.QRect(550, 10, 121, 41))
+        self.username_label.setStyleSheet("background-color:#c4c4c4;\n"
+                                          "border-radius:10px;\n"
+                                          "text-align: center;")
+        self.username_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.username_label.setObjectName("username_label")
         self.logout_btn = QtWidgets.QPushButton(self.centralwidget)
         self.logout_btn.setGeometry(QtCore.QRect(700, 10, 93, 41))
         self.logout_btn.setStyleSheet("border:1px solid black;\n"
-"border-radius:10px;")
+                                      "border-radius:10px;")
         self.logout_btn.setObjectName("logout_btn")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(30, 60, 101, 41))
@@ -54,113 +53,172 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(10, 10, 81, 31))
-        self.pushButton_2.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.pushButton_2.setStyleSheet("\n"
-"border-radius:10px;\n"
-" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/next.png);")
-        self.pushButton_2.setText("")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(30, 100, 111, 101))
-        self.pushButton_3.setText("")
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QtCore.QRect(30, 290, 111, 101))
-        self.pushButton_4.setText("")
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(150, 290, 111, 101))
-        self.pushButton_5.setText("")
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(270, 290, 111, 101))
-        self.pushButton_6.setText("")
-        self.pushButton_6.setObjectName("pushButton_6")
-        self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_7.setGeometry(QtCore.QRect(390, 290, 111, 101))
-        self.pushButton_7.setText("")
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_8.setGeometry(QtCore.QRect(30, 400, 111, 101))
-        self.pushButton_8.setText("")
-        self.pushButton_8.setObjectName("pushButton_8")
-        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_9.setGeometry(QtCore.QRect(390, 400, 111, 101))
-        self.pushButton_9.setText("")
-        self.pushButton_9.setObjectName("pushButton_9")
-        self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_10.setGeometry(QtCore.QRect(150, 400, 111, 101))
-        self.pushButton_10.setText("")
-        self.pushButton_10.setObjectName("pushButton_10")
-        self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_11.setGeometry(QtCore.QRect(270, 400, 111, 101))
-        self.pushButton_11.setText("")
-        self.pushButton_11.setObjectName("pushButton_11")
+        self.history_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.history_btn.setGeometry(QtCore.QRect(30, 100, 111, 101))
+        self.history_btn.setText("")
+        self.history_btn.setObjectName("history_btn")
+        # self.recommendedSong_1 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_1.setGeometry(QtCore.QRect(30, 290, 111, 101))
+        # self.recommendedSong_1.setText("")
+
+        self.recommendedSong_1 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_5 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_6 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_7 = QtWidgets.QPushButton(self.centralwidget)
+        self.recommendedSong_8 = QtWidgets.QPushButton(self.centralwidget)
+        # This is the list for all Button
+        allButtonFirstRow = [
+            self.recommendedSong_1, self.recommendedSong_2, self.recommendedSong_3, self.recommendedSong_4]
+        allButtonSecondRow = [
+            self.recommendedSong_5, self.recommendedSong_6, self.recommendedSong_7, self.recommendedSong_8]
+
+        geoRowFirst = 30
+        firstRowCounter = 0
+        geoRowSecond = 30
+        secondRowCounter = 4
+
+        recommender = engine()
+        recommender.loadData()
+        print('self nya: ' + self.username)
+        recommender.buildRatingMatrix()
+        hasil_rekomendasi = recommender.generateRecommendations(
+            self.username, 8)
+        print('hasilnya dibawah:')
+        print(hasil_rekomendasi)
+
+        for x in range(len(hasil_rekomendasi)):
+
+            allButtonFirstRow[x].setGeometry(
+                QtCore.QRect(geoRowFirst, 290, 111, 101))
+            geoRowFirst += 120
+            allButtonFirstRow[x].setText(
+                str(hasil_rekomendasi[firstRowCounter][0]))
+            allButtonFirstRow[x].setObjectName(
+                "recommendedSong_"+str(firstRowCounter))
+            if (firstRowCounter >= 3):
+                break
+            firstRowCounter += 1
+
+        if (len(hasil_rekomendasi) > 4):
+            for y in range(len(allButtonSecondRow)):
+                allButtonSecondRow[y].setGeometry(
+                    QtCore.QRect(geoRowSecond, 400, 111, 101))
+                geoRowSecond += 120
+                allButtonSecondRow[y].setText(
+                    str(hasil_rekomendasi[secondRowCounter][0]))
+                allButtonSecondRow[y].setObjectName(
+                    "recommendedSong_"+str(secondRowCounter))
+                if (secondRowCounter >= 8):
+                    break
+                secondRowCounter += 1
+
+        # self.recommendedSong_1.setObjectName("recommendedSong_1")
+        # self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_2.setGeometry(QtCore.QRect(150, 290, 111, 101))
+        # self.recommendedSong_2.setText("")
+        # self.recommendedSong_2.setObjectName("recommendedSong_2")
+        # self.recommendedSong_3 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_3.setGeometry(QtCore.QRect(270, 290, 111, 101))
+        # self.recommendedSong_3.setText("")
+        # self.recommendedSong_3.setObjectName("recommendedSong_3")
+        # self.recommendedSong_4 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_4.setGeometry(QtCore.QRect(390, 290, 111, 101))
+        # self.recommendedSong_4.setText("")
+        # self.recommendedSong_4.setObjectName("recommendedSong_4")
+        # self.recommendedSong_5 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_5.setGeometry(QtCore.QRect(30, 400, 111, 101))
+        # self.recommendedSong_5.setText("")
+        # self.recommendedSong_5.setObjectName("recommendedSong_5")
+        # self.recommendedSong_8 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_8.setGeometry(QtCore.QRect(390, 400, 111, 101))
+        # self.recommendedSong_8.setText("")
+        # self.recommendedSong_8.setObjectName("recommendedSong_8")
+        # self.recommendedSong_6 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_6.setGeometry(QtCore.QRect(150, 400, 111, 101))
+        # self.recommendedSong_6.setText("")
+        # self.recommendedSong_6.setObjectName("recommendedSong_6")
+        # self.recommendedSong_7 = QtWidgets.QPushButton(self.centralwidget)
+        # self.recommendedSong_7.setGeometry(QtCore.QRect(270, 400, 111, 101))
+        # self.recommendedSong_7.setText("")
+        # self.recommendedSong_7.setObjectName("recommendedSong_7")
         self.star1 = QtWidgets.QPushButton(self.centralwidget)
         self.star1.setGeometry(QtCore.QRect(30, 210, 31, 16))
         self.star1.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-"background-color:transparent;")
+                                 "background-color:transparent;")
         self.star1.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("emptyStar.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("emptyStar.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.star1.setIcon(icon)
         self.star1.setObjectName("star1")
         self.star2 = QtWidgets.QPushButton(self.centralwidget)
         self.star2.setGeometry(QtCore.QRect(50, 210, 31, 16))
         self.star2.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-"background-color:transparent;")
+                                 "background-color:transparent;")
         self.star2.setText("")
         self.star2.setIcon(icon)
         self.star2.setObjectName("star2")
         self.star3 = QtWidgets.QPushButton(self.centralwidget)
         self.star3.setGeometry(QtCore.QRect(70, 210, 31, 16))
         self.star3.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-"background-color:transparent;")
+                                 "background-color:transparent;")
         self.star3.setText("")
         self.star3.setIcon(icon)
         self.star3.setObjectName("star3")
         self.star4 = QtWidgets.QPushButton(self.centralwidget)
         self.star4.setGeometry(QtCore.QRect(90, 210, 31, 16))
         self.star4.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-"background-color:transparent;")
+                                 "background-color:transparent;")
         self.star4.setText("")
         self.star4.setIcon(icon)
         self.star4.setObjectName("star4")
         self.star5 = QtWidgets.QPushButton(self.centralwidget)
         self.star5.setGeometry(QtCore.QRect(110, 210, 31, 16))
         self.star5.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-"background-color:transparent;")
+                                 "background-color:transparent;")
         self.star5.setText("")
         self.star5.setIcon(icon)
         self.star5.setObjectName("star5")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_songSearch.setGeometry(QtCore.QRect(30, 10, 271, 41))
+        self.lineEdit_songSearch.setObjectName("lineEdit_songSearch")
+        self.search_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.search_btn.setGeometry(QtCore.QRect(310, 10, 93, 41))
+        self.search_btn.setStyleSheet("border:1px solid black;\n"
+                                      "border-radius:10px;")
+        self.search_btn.setObjectName("search_btn")
+        homePageHisWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(homePageHisWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        homePageHisWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(homePageHisWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        homePageHisWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(homePageHisWindow)
+        QtCore.QMetaObject.connectSlotsByName(homePageHisWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, homePageHisWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "USER"))
-        self.logout_btn.setText(_translate("MainWindow", "LOGOUT"))
-        self.label_2.setText(_translate("MainWindow", "History"))
-        self.label_4.setText(_translate("MainWindow", "Made For You"))
+        homePageHisWindow.setWindowTitle(
+            _translate("homePageHisWindow", "MainWindow"))
+        self.username_label.setText(_translate(
+            "homePageHisWindow", self.username))
+        self.logout_btn.setText(_translate("homePageHisWindow", "LOGOUT"))
+        self.label_2.setText(_translate("homePageHisWindow", "History"))
+        self.label_4.setText(_translate("homePageHisWindow", "Made For You"))
+        self.search_btn.setText(_translate("homePageHisWindow", "SEARCH"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    homePageHisWindow = QtWidgets.QMainWindow()
+    ui = Ui_homePageHisWindow()
+    ui.setupUi(homePageHisWindow)
+    homePageHisWindow.show()
     sys.exit(app.exec_())
