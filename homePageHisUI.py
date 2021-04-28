@@ -9,10 +9,35 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit, QCompleter
 from recommenderEngine import engine
+import pandas as pd
+from PyQt5.QtCore import Qt
+
+
+df = pd.read_csv("listSongsCSV.csv", sep=',')
 
 
 class Ui_homePageHisWindow(object):
+
+    def update_display(self):
+        song_title = self.lineEdit_songSearch.text()
+        song_title_lower = song_title.lower()
+
+    def searchSongs(self, mainSelectedSong):
+        from selectedSongUI import Ui_mainSelectedSong
+        song_title = self.lineEdit_songSearch.text()
+        song_title_lower = song_title.lower()
+
+        get_username = self.username
+        print('username will be sent dari homePageHisUi: ' + get_username)
+
+        self.mainSelectedSong = QtWidgets.QMainWindow()
+        self.message = song_title
+        self.username = get_username
+        self.ui = Ui_mainSelectedSong(self.message, self.username)
+        self.ui.setupUi(self.mainSelectedSong)
+        self.mainSelectedSong.show()
 
     def __init__(self, message, username, songRating):
         self.username = username
@@ -191,11 +216,21 @@ class Ui_homePageHisWindow(object):
         self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_songSearch.setGeometry(QtCore.QRect(30, 10, 271, 41))
         self.lineEdit_songSearch.setObjectName("lineEdit_songSearch")
+
+        self.lineEdit_songSearch.editingFinished.connect(self.update_display)
+
+        self.completer = QCompleter(df.Title)
+        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.lineEdit_songSearch.setCompleter(self.completer)
+
         self.search_btn = QtWidgets.QPushButton(self.centralwidget)
         self.search_btn.setGeometry(QtCore.QRect(310, 10, 93, 41))
         self.search_btn.setStyleSheet("border:1px solid black;\n"
                                       "border-radius:10px;")
         self.search_btn.setObjectName("search_btn")
+
+        self.search_btn.clicked.connect(self.searchSongs)
+
         homePageHisWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(homePageHisWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
@@ -211,6 +246,7 @@ class Ui_homePageHisWindow(object):
 
     def logoutAndSave(self):
         self.recommender.saveData()
+        print('saved')
 
     def retranslateUi(self, homePageHisWindow):
         _translate = QtCore.QCoreApplication.translate

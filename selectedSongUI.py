@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from SongDetails import SongsDetails
 from Songs import Songs_array
-from homePageHisUI import Ui_homePageHisWindow
+from homePageHisUI import *
 
 
 class Ui_mainSelectedSong(object):
@@ -218,6 +218,7 @@ class Ui_mainSelectedSong(object):
         self.ui.setupUi(self.homePageHisWindow)
         self.homePageHisWindow.show()
         print('rating lagunya: ' + str(self.rating))
+        print('lagu yang dipilih: ' + self.message)
 
     def retranslateUi(self, mainSelectedSong):
         _translate = QtCore.QCoreApplication.translate

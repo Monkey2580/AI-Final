@@ -19,23 +19,16 @@ class engine:
         For testing only
         :return:
         """
-        self.songList = pandas.read_csv("songs-test.csv", sep=",", header=0, index_col=0, names=[
-                                        "SongID", "Title", "ArtistName", "AlbumName", "Duration"])
-        self.userRatings = pandas.read_csv(
-            "user-song-rating.csv", sep=";", header=0, names=["UserID", "SongID", "Rating"])
-        # sanity check, display first 5 entries
-        print(tabulate(self.songList.head(5), headers="keys", tablefmt='psql'))
-        # sanity check, display first 5 entries
-        print(tabulate(self.userRatings.head(5), headers="keys", tablefmt='psql'))
-        # Check that every Song ID referenced in self.ratings exists in self.songList
-        self.userRatings = self.userRatings[self.userRatings["SongID"].isin(
-            self.songList.index)]
-        # print(self.getSongByID(2))
+        self.songList = pandas.read_csv("songs-test.csv", sep=",", header=0, index_col=0, names=["SongID", "Title", "ArtistName", "AlbumName", "Duration"])
+        self.userRatings = pandas.read_csv("user-song-rating.csv", sep=";", header=0, names=["UserID", "SongID", "Rating"])
+        print(tabulate(self.songList.head(5), headers="keys", tablefmt='psql'))  # sanity check, display first 5 entries
+        print(tabulate(self.userRatings.head(5), headers="keys", tablefmt='psql'))  # sanity check, display first 5 entries
+        self.userRatings = self.userRatings[self.userRatings["SongID"].isin(self.songList.index)]  # Check that every Song ID referenced in self.ratings exists in self.songList
+        #print(self.getSongByID(2))
         print("\n")
         #print(self.userFavoriteSongs("u1", 2))
         usersPerSongID = self.userRatings.SongID.value_counts()  # includes empty entries
-        # number of song entries
-        print("Unique songs:", usersPerSongID.shape[0])
+        print("Unique songs:", usersPerSongID.shape[0])  # number of song entries
         print(usersPerSongID)  # number of users who have rated a song
         print("\n")
         SongIDPerUser = self.userRatings.UserID.value_counts()
@@ -71,13 +64,11 @@ class engine:
         :return:
         """
         rowIndex = 0
-        # copy userRating dataframe without rating column
-        userRatingEntry = self.userRatings.drop("Rating", 1)
-        # check if user and song is in dataFrame, returns tuple
-        userRatingEntry = userRatingEntry.isin([user, song])
+        userRatingEntry = self.userRatings.drop("Rating", 1)  # copy userRating dataframe without rating column
+        userRatingEntry = userRatingEntry.isin([user, song])  # check if user and song is in dataFrame, returns tuple
         userRatingEntry = userRatingEntry.to_numpy()  # reformat to 2D tuple
         for row in userRatingEntry:
-            # print(row[0])
+            #print(row[0])
             #print(row[1], "\n")
             if row[0] and row[1]:  # if a user's song rating entry exists
                 return self.userRatings.loc[rowIndex]
@@ -94,18 +85,16 @@ class engine:
         """
         rowIndex = 0
         entryFound = False
-        # copy userRating dataframe without rating column
-        userRatingEntry = self.userRatings.drop("Rating", 1)
+        userRatingEntry = self.userRatings.drop("Rating", 1)  # copy userRating dataframe without rating column
         userRatingEntry = userRatingEntry.isin([user, song])
         userRatingEntry = userRatingEntry.to_numpy()
         #print(userRatingEntry, "\n")
 
         for row in userRatingEntry:  # iterate over rows
-            # print(row[0])
+            #print(row[0])
             #print(row[1], "\n")
             if row[0] and row[1]:  # if a user has already rated the specified song
-                # update a user's rating for the song
-                self.userRatings.loc[rowIndex] = [user] + list([song, rating])
+                self.userRatings.loc[rowIndex] = [user] + list([song, rating])  # update a user's rating for the song
                 entryFound = True
                 break
             else:
@@ -131,10 +120,8 @@ class engine:
         songAxis = self.userRatings.SongID.value_counts()
         # self.userRatings = self.userRatings[self.userRatings["SongID"].isin(userAxis[userAxis>10].index)]  # Restrict data to only include users who have rated n-number of songs (replace n)
         # self.userRatings = self.userRatings[self.userRatings["UserID"].isin(userAxis[songAxis>10].index)]  # Restrict data to only include songs that has been rated n-number of times (replace n)
-        self.ratingMatrix = pandas.pivot_table(
-            self.userRatings, values="Rating", index=["UserID"], columns=["SongID"])
-        print("Rating Matrix generated:",
-              songAxis.shape[0], "columns (songs),", userAxis.shape[0], "rows (users)")
+        self.ratingMatrix = pandas.pivot_table(self.userRatings, values="Rating", index=["UserID"], columns=["SongID"])
+        print("Rating Matrix generated:", songAxis.shape[0], "columns (songs),", userAxis.shape[0], "rows (users)")
 
     def getSongByID(self, song_id):
         title = self.songList.at[song_id, "Title"]
@@ -155,10 +142,8 @@ class engine:
         :return:
         """
         userRatings = self.userRatings[self.userRatings["UserID"] == user]
-        sortedRatings = pandas.DataFrame.sort_values(
-            userRatings, ["Rating"], ascending=[0])[:n]
-        sortedRatings["Title"] = sortedRatings["SongID"].apply(
-            self.getSongByID)
+        sortedRatings = pandas.DataFrame.sort_values(userRatings, ["Rating"], ascending=[0])[:n]
+        sortedRatings["Title"] = sortedRatings["SongID"].apply(self.getSongByID)
         return sortedRatings
 
     def generateRecommendations(self, user, n):
@@ -173,20 +158,13 @@ class engine:
         """
         recommendationTuple = []  # Return variable
 
-        # Find nearest neighbours to target user
-        nearestUsers = self.nearestNeighbours(user, n)
-        neighbourRatings = self.ratingMatrix[self.ratingMatrix.index.isin(
-            nearestUsers)]  # Get ratings from nearest neigbours
-        # Average ratings out from neighbours, drop any NaN entries
-        avgRating = neighbourRatings.apply(numpy.nanmean).dropna()
-        # Get target user's already rated songs
-        listenedSongs = self.ratingMatrix.transpose()[user].dropna().index
-        # Get values of songs that are not rated by target
-        avgRating = avgRating[~avgRating.index.isin(listenedSongs)]
-        # Sort remaining values in descending order
-        recommendations = avgRating.sort_values(ascending=False).index[:n]
-        reccomendationList = pandas.Series(recommendations).apply(
-            self.getSongByID)  # Pair SongIDs to song metadata
+        nearestUsers = self.nearestNeighbours(user, n)  # Find nearest neighbours to target user
+        neighbourRatings = self.ratingMatrix[self.ratingMatrix.index.isin(nearestUsers)]  # Get ratings from nearest neigbours
+        avgRating = neighbourRatings.apply(numpy.nanmean).dropna()  # Average ratings out from neighbours, drop any NaN entries
+        listenedSongs = self.ratingMatrix.transpose()[user].dropna().index  # Get target user's already rated songs
+        avgRating = avgRating[~avgRating.index.isin(listenedSongs)]  # Get values of songs that are not rated by target
+        recommendations = avgRating.sort_values(ascending=False).index[:n]  # Sort remaining values in descending order
+        reccomendationList = pandas.Series(recommendations).apply(self.getSongByID)  # Pair SongIDs to song metadata
 
         # Reformat to basic tuple
         for recommendation in reccomendationList:
@@ -203,12 +181,9 @@ class engine:
         :return: DataFrame, n-number of neighest neighbour and their ratings
         """
         allUsers = pandas.DataFrame(self.ratingMatrix.index)  # copy matrix
-        # remove active user from current dataset
-        allUsers = allUsers[allUsers.UserID != user]
-        allUsers["Distance"] = allUsers["UserID"].apply(
-            lambda x: self.checkUserSimilarity(user, x))
-        nearestUsers = allUsers.sort_values(["Distance"], ascending=True)[
-            "UserID"][:n]  # structure: Index, UserID
+        allUsers = allUsers[allUsers.UserID != user]  # remove active user from current dataset
+        allUsers["Distance"] = allUsers["UserID"].apply(lambda x: self.checkUserSimilarity(user, x))
+        nearestUsers = allUsers.sort_values(["Distance"], ascending=True)["UserID"][:n]  # structure: Index, UserID
         return nearestUsers
 
     def checkUserSimilarity(self, user1, user2):
@@ -221,14 +196,13 @@ class engine:
         :param user2: User 2's ratings
         :return: Integer, similarity value
         """
-        user1Ratings = self.ratingMatrix.transpose(
-        )[user1]  # get user's ratings for all songs (includes unrated as NaN)
-        # print(user1Ratings)
+        user1Ratings = self.ratingMatrix.transpose()[user1]  # get user's ratings for all songs (includes unrated as NaN)
+        #print(user1Ratings)
         user2Ratings = self.ratingMatrix.transpose()[user2]
-        # print(user2Ratings)
+        #print(user2Ratings)
         try:
             distance = hamming(user1Ratings, user2Ratings)
-            # print(distance)
+            #print(distance)
         except:
             distance = numpy.NaN
         return distance
@@ -239,8 +213,7 @@ class engine:
         Call this before exiting the program or changes to data will be lost.
         :return:
         """
-        self.userRatings.to_csv('user-song-rating.csv', header=True, sep=";",
-                                index=False)  # replace file name with actual user-song-rating
+        self.userRatings.to_csv('user-song-rating-updated.csv', header=True, sep=";", index=False)  # replace file name with actual user-song-rating
         return
 
 

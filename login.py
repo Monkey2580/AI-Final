@@ -73,6 +73,7 @@ class Ui_MainWindow(object):
                 self.message = session
                 self.ui = Ui_dashboardObject(self.message)
                 self.ui.setupUi(self.dashboardObject)
+
                 self.dashboardObject.show()
                 break
 
