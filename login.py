@@ -16,6 +16,9 @@ import pandas as pd
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
+
+        self.loginPage = MainWindow
+
         MainWindow.resize(800, 600)
         MainWindow.setMinimumSize(QtCore.QSize(800, 600))
         MainWindow.setMaximumSize(QtCore.QSize(800, 600))
@@ -73,7 +76,7 @@ class Ui_MainWindow(object):
                 self.message = session
                 self.ui = Ui_dashboardObject(self.message)
                 self.ui.setupUi(self.dashboardObject)
-
+                self.loginPage.hide()
                 self.dashboardObject.show()
                 break
 

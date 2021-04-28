@@ -2,7 +2,7 @@ import csv
 from SongDetails import SongsDetails
 Songs_array = []
 
-with open("listSongsCSV.csv", 'r', encoding="utf-8") as file:
+with open("songs-test.csv", 'r', encoding="utf-8") as file:
     reader = csv.DictReader(file)
     for row in reader:
         # DurationInSecs = float(row["Duration"]) / 60

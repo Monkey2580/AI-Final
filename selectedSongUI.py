@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from SongDetails import SongsDetails
 from Songs import Songs_array
 from homePageHisUI import *
+from recommenderEngine import engine
 
 
 class Ui_mainSelectedSong(object):
@@ -75,9 +76,11 @@ class Ui_mainSelectedSong(object):
             )
         self.rating = 5
 
-    def __init__(self, message, user):
+    def __init__(self, message, user, recommender):
         self.message = message
         self.user = user
+        self.recommender = recommender
+        # self.recommender.loadData()
         print('current song:' + message)
         print('user retrieved: ' + user)
         # if message in Songs_array:
@@ -88,10 +91,23 @@ class Ui_mainSelectedSong(object):
                 self.artist = x.artist
         self.rating = 0
 
+    def logoutUser(self, MainWindow):
+        self.recommender.saveData()
+        print('data saved')
+        from login import Ui_MainWindow
+        self.MainWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.selectedPage.hide()
+        self.ui.setupUi(self.MainWindow)
+        self.MainWindow.show()
+
     def setupUi(self, mainSelectedSong):
 
         mainSelectedSong.setObjectName("mainSelectedSong")
         mainSelectedSong.resize(800, 600)
+
+        self.selectedPage = mainSelectedSong
+
         self.centralwidget = QtWidgets.QWidget(mainSelectedSong)
         self.centralwidget.setObjectName("centralwidget")
         self.back_btn = QtWidgets.QPushButton(self.centralwidget)
@@ -121,6 +137,7 @@ class Ui_mainSelectedSong(object):
         self.logout_btn.setStyleSheet("border:1px solid black;\n"
                                       "border-radius:10px;")
         self.logout_btn.setObjectName("logout_btn")
+        self.logout_btn.clicked.connect(self.logoutUser)
         self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_12.setGeometry(QtCore.QRect(50, 120, 351, 281))
         self.pushButton_12.setText("")
@@ -197,6 +214,7 @@ class Ui_mainSelectedSong(object):
         self.retranslateUi(mainSelectedSong)
         QtCore.QMetaObject.connectSlotsByName(mainSelectedSong)
         self.back_btn.clicked.connect(self.goToHomePageHis)
+
         self.star1.clicked.connect(self.ratingFilledStars)
         self.star2.clicked.connect(self.ratingFilledStars2)
         self.star3.clicked.connect(self.ratingFilledStars3)
@@ -204,6 +222,10 @@ class Ui_mainSelectedSong(object):
         self.star5.clicked.connect(self.ratingFilledStar5)
         self.stars = [self.star1, self.star2,
                       self.star3, self.star4, self.star5]
+        # self.recommender = engine()
+        # self.recommender.loadData()
+        
+        self.recommender.buildRatingMatrix()
 
     def goToHomePageHis(self, homePageHisWindow):
         get_username = self.user
@@ -214,11 +236,14 @@ class Ui_mainSelectedSong(object):
         self.message = get_song_name
         self.songRating = get_rating
         self.ui = Ui_homePageHisWindow(
-            self.message, self.username, self.songRating)
+            self.message, self.username, self.songRating, self.recommender)
         self.ui.setupUi(self.homePageHisWindow)
+        self.selectedPage.hide()
         self.homePageHisWindow.show()
         print('rating lagunya: ' + str(self.rating))
         print('lagu yang dipilih: ' + self.message)
+        self.recommender.saveData()
+        print('DATA INI UDAH KESIMPEN')
 
     def retranslateUi(self, mainSelectedSong):
         _translate = QtCore.QCoreApplication.translate

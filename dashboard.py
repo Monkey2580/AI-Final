@@ -14,32 +14,12 @@ from PyQt5.QtGui import QStandardItem, QStandardItemModel, QFont
 import pandas as pd
 from PyQt5.QtCore import Qt
 from selectedSongUI import Ui_mainSelectedSong
+from recommenderEngine import engine
 
-
-df = pd.read_csv("listSongsCSV.csv", sep=',')
+df = pd.read_csv("songs-test.csv", sep=',')
 
 
 class Ui_dashboardObject(object):
-
-    # for widget in self.widgets:
-    #     if text.lower() in widget.name.lower():
-    #         widget.show()
-    #     else:
-    #         widget.hide()
-
-    def searchSongs(self, mainSelectedSong):
-        song_title = self.lineEdit_songSearch.text()
-        song_title_lower = song_title.lower()
-
-        get_username = self.message
-        print('username will be sent: ' + get_username)
-
-        self.mainSelectedSong = QtWidgets.QMainWindow()
-        self.message = song_title
-        self.username = get_username
-        self.ui = Ui_mainSelectedSong(self.message, self.username)
-        self.ui.setupUi(self.mainSelectedSong)
-        self.mainSelectedSong.show()
 
     def update_display(self):
         song_title = self.lineEdit_songSearch.text()
@@ -49,19 +29,15 @@ class Ui_dashboardObject(object):
         #         print('song found')
         #         break
 
-    def closeDashboardPage(self, dashboardObject):
-        dashboardObject.close()
-
-    def retranslateUi(self, dashboardObject):
-        _translate = QtCore.QCoreApplication.translate
-        dashboardObject.setWindowTitle(
-            _translate("dashboardObject", "MainWindow"))
-        self.logout_btn.setText(_translate("dashboardObject", "LOGOUT"))
-        self.username_label.setText(
-            _translate("dashboardObject", self.message))
-        self.label_11.setText(_translate(
-            "dashboardObject", "WELCOME TO MAIN DASHBOARD"))
-        self.search_btn.setText(_translate("dashboardObject", "SEARCH"))
+    def logoutUser(self, MainWindow):
+        self.recommender.saveData()
+        print('data saved')
+        from login import Ui_MainWindow
+        self.MainWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.dashboard.hide()
+        self.ui.setupUi(self.MainWindow)
+        self.MainWindow.show()
 
     def __init__(self, message):
         self.message = message
@@ -73,6 +49,8 @@ class Ui_dashboardObject(object):
         dashboardObject.setMinimumSize(QtCore.QSize(800, 600))
         dashboardObject.setMaximumSize(QtCore.QSize(800, 600))
 
+        self.dashboard = dashboardObject
+
         self.centralwidget = QtWidgets.QWidget(dashboardObject)
         self.centralwidget.setObjectName("centralwidget")
         self.logout_btn = QtWidgets.QPushButton(self.centralwidget)
@@ -80,6 +58,7 @@ class Ui_dashboardObject(object):
         self.logout_btn.setStyleSheet("border:1px solid black;\n"
                                       "border-radius:10px;")
         self.logout_btn.setObjectName("logout_btn")
+
         self.username_label = QtWidgets.QLabel(self.centralwidget)
         self.username_label.setGeometry(QtCore.QRect(550, 10, 121, 41))
         self.username_label.setStyleSheet("background-color:#c4c4c4;\n"
@@ -102,6 +81,7 @@ class Ui_dashboardObject(object):
                                       "border-radius:10px;")
         self.search_btn.setObjectName("search_btn")
         self.search_btn.clicked.connect(self.searchSongs)
+
         self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_songSearch.setGeometry(QtCore.QRect(20, 11, 271, 41))
         mainLayout = QVBoxLayout()
@@ -116,10 +96,35 @@ class Ui_dashboardObject(object):
 
         self.retranslateUi(dashboardObject)
         QtCore.QMetaObject.connectSlotsByName(dashboardObject)
-        self.logout_btn.clicked.connect(
-            lambda: self.closeDashboardPage(dashboardObject))
+        self.logout_btn.clicked.connect(self.logoutUser)
+        self.recommender = engine()
+        self.recommender.loadData()
+        self.recommender.buildRatingMatrix()
 
-#
+    def searchSongs(self, mainSelectedSong):
+        song_title = self.lineEdit_songSearch.text()
+        song_title_lower = song_title.lower()
+        get_username = self.message
+        print('username will be sent: ' + get_username)
+        self.mainSelectedSong = QtWidgets.QMainWindow()
+        self.message = song_title
+        self.username = get_username
+        self.ui = Ui_mainSelectedSong(
+            self.message, self.username, self.recommender)
+        self.ui.setupUi(self.mainSelectedSong)
+        self.dashboard.hide()
+        self.mainSelectedSong.show()
+
+    def retranslateUi(self, dashboardObject):
+        _translate = QtCore.QCoreApplication.translate
+        dashboardObject.setWindowTitle(
+            _translate("dashboardObject", "MainWindow"))
+        self.logout_btn.setText(_translate("dashboardObject", "LOGOUT"))
+        self.username_label.setText(
+            _translate("dashboardObject", self.message))
+        self.label_11.setText(_translate(
+            "dashboardObject", "WELCOME TO MAIN DASHBOARD"))
+        self.search_btn.setText(_translate("dashboardObject", "SEARCH"))
 
 
 if __name__ == "__main__":

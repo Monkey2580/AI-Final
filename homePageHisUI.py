@@ -15,7 +15,7 @@ import pandas as pd
 from PyQt5.QtCore import Qt
 
 
-df = pd.read_csv("listSongsCSV.csv", sep=',')
+df = pd.read_csv("songs-test.csv", sep=',')
 
 
 class Ui_homePageHisWindow(object):
@@ -35,19 +35,34 @@ class Ui_homePageHisWindow(object):
         self.mainSelectedSong = QtWidgets.QMainWindow()
         self.message = song_title
         self.username = get_username
-        self.ui = Ui_mainSelectedSong(self.message, self.username)
+        self.ui = Ui_mainSelectedSong(
+            self.message, self.username, self.recommender)
+        self.homepage.hide()
         self.ui.setupUi(self.mainSelectedSong)
+
         self.mainSelectedSong.show()
 
-    def __init__(self, message, username, songRating):
+    def __init__(self, message, username, songRating, recommender):
         self.username = username
         self.message = message
         self.songRating = songRating
         print('ini ngeprint dari homePageHisUI: ' + self.message)
+        self.recommender = recommender
+
+        self.song_id = self.recommender.getSongID(self.message)
+        self.recommender.updateUserRating(
+            self.username, self.song_id, self.songRating)
+
+        self.hasil_rekomendasi = self.recommender.generateRecommendations(
+            self.username, 8)
+
+        # self.recommender.loadData()
 
     def setupUi(self, homePageHisWindow):
         homePageHisWindow.setObjectName("homePageHisWindow")
         homePageHisWindow.resize(800, 600)
+
+        self.homepage = homePageHisWindow
         homePageHisWindow.setMinimumSize(QtCore.QSize(800, 600))
         homePageHisWindow.setMaximumSize(QtCore.QSize(800, 600))
         homePageHisWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -108,43 +123,43 @@ class Ui_homePageHisWindow(object):
         geoRowSecond = 30
         secondRowCounter = 4
 
-        self.recommender = engine()
-        self.recommender.loadData()
         print('self nya: ' + self.username)
         self.recommender.buildRatingMatrix()
-        hasil_rekomendasi = self.recommender.generateRecommendations(
-            self.username, 8)
-        print('hasilnya dibawah:')
-        print(hasil_rekomendasi)
 
-        for x in range(len(hasil_rekomendasi)):
+        print('hasilnya dibawah:')
+        print(self.hasil_rekomendasi)
+
+        for x in range(len(self.hasil_rekomendasi)):
 
             allButtonFirstRow[x].setGeometry(
                 QtCore.QRect(geoRowFirst, 290, 111, 101))
             geoRowFirst += 120
             allButtonFirstRow[x].setText(
-                str(hasil_rekomendasi[firstRowCounter][0]))
+                str(self.hasil_rekomendasi[firstRowCounter][0]))
             allButtonFirstRow[x].setObjectName(
                 "recommendedSong_"+str(firstRowCounter))
+            if (firstRowCounter >= len(allButtonFirstRow)):
+                break
             if (firstRowCounter >= 3):
                 break
             firstRowCounter += 1
 
-        if (len(hasil_rekomendasi) > 4):
+        if (len(self.hasil_rekomendasi) > 4):
             for y in range(len(allButtonSecondRow)):
+                if(len(self.hasil_rekomendasi)-1 <= secondRowCounter):
+                    break
                 allButtonSecondRow[y].setGeometry(
                     QtCore.QRect(geoRowSecond, 400, 111, 101))
                 geoRowSecond += 120
                 allButtonSecondRow[y].setText(
-                    str(hasil_rekomendasi[secondRowCounter][0]))
+                    str(self.hasil_rekomendasi[secondRowCounter][0]))
                 allButtonSecondRow[y].setObjectName(
                     "recommendedSong_"+str(secondRowCounter))
-                if (secondRowCounter >= 8):
+                if (secondRowCounter > 8):
                     break
+
                 secondRowCounter += 1
-        song_id = self.recommender.getSongID(self.message)
-        self.recommender.updateUserRating(
-            self.username, song_id[0], self.songRating)
+
         print(self.recommender.userRatings)
         # self.recommendedSong_1.setObjectName("recommendedSong_1")
         # self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
@@ -246,7 +261,13 @@ class Ui_homePageHisWindow(object):
 
     def logoutAndSave(self):
         self.recommender.saveData()
-        print('saved')
+        print('data saved')
+        from login import Ui_MainWindow
+        self.MainWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.homepage.hide()
+        self.ui.setupUi(self.MainWindow)
+        self.MainWindow.show()
 
     def retranslateUi(self, homePageHisWindow):
         _translate = QtCore.QCoreApplication.translate
