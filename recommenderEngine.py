@@ -2,6 +2,7 @@ import pandas  # mostly just for DataFrames
 from tabulate import tabulate  # tabulate DataFrames for easier viewing
 import numpy
 from scipy.spatial.distance import hamming  # hamming distance function
+import scratch
 
 
 class engine:
@@ -55,6 +56,33 @@ class engine:
             print(tabulate(self.songList))
             print(tabulate(self.userRatings))
 
+    def getSongData(self, song_id):
+        title = self.songList.at[song_id, "Title"]
+        artist = self.songList.at[song_id, "ArtistName"]
+        album = self.songList.at[song_id, "AlbumName"]
+        return title, artist, album
+
+    def getSongID(self, songName):
+        songID = self.songList[self.songList["Title"] == songName].index.values
+        if songID.size == 0:
+            print("Warning: Song title not found in songList, make sure title exists in list and case matches. Returning 0.\n")
+            return 0
+        else:
+            return songID[0]
+
+    def userFavoriteSongs(self, user, n):
+        """
+        Get the specified user's top n rated songs
+
+        :param user: user's id
+        :param n: number of songs to retrieve
+        :return:
+        """
+        userRatings = self.userRatings[self.userRatings["UserID"] == user]
+        sortedRatings = pandas.DataFrame.sort_values(userRatings, ["Rating"], ascending=[0])[:n]
+        sortedRatings["Title"] = sortedRatings["SongID"].apply(self.getSongData)
+        return sortedRatings
+
     def getUserRating(self, user, song):
         """
         Returns the specified user's ratings for the specified song.
@@ -74,7 +102,7 @@ class engine:
                 return self.userRatings.loc[rowIndex]
             else:
                 rowIndex += 1
-
+        print("Warning: User not found in userRatings, make sure user exists and parameter's case matches.\n")
         return None
 
     def updateUserRating(self, user, song, rating, updateMatrix=True):
@@ -95,6 +123,7 @@ class engine:
             #print(row[1], "\n")
             if row[0] and row[1]:  # if a user has already rated the specified song
                 self.userRatings.loc[rowIndex] = [user] + list([song, rating])  # update a user's rating for the song
+                print("Entry for user and song:", user, song, "found. Updating rating to,", rating)
                 entryFound = True
                 break
             else:
@@ -103,6 +132,7 @@ class engine:
         if not entryFound:  # user has not previously rated the specified song
             newMaxIndex = self.userRatings.index.max() + 1
             self.userRatings.loc[newMaxIndex] = [user] + list([song, rating])
+            print("Entry for user and song:", user, song, "not found. Creating new entry with rating:,", rating)
 
         if updateMatrix:
             self.buildRatingMatrix()
@@ -123,29 +153,6 @@ class engine:
         self.ratingMatrix = pandas.pivot_table(self.userRatings, values="Rating", index=["UserID"], columns=["SongID"])
         print("Rating Matrix generated:", songAxis.shape[0], "columns (songs),", userAxis.shape[0], "rows (users)")
 
-    def getSongByID(self, song_id):
-        title = self.songList.at[song_id, "Title"]
-        artist = self.songList.at[song_id, "ArtistName"]
-        album = self.songList.at[song_id, "AlbumName"]
-        return title, artist, album
-
-    def getSongID(self, songName):
-        songID = self.songList[self.songList["Title"] == songName].index.values
-        return songID
-
-    def userFavoriteSongs(self, user, n):
-        """
-        Get the specified user's top n rated songs
-
-        :param user: user's id
-        :param n: number of songs to retrieve
-        :return:
-        """
-        userRatings = self.userRatings[self.userRatings["UserID"] == user]
-        sortedRatings = pandas.DataFrame.sort_values(userRatings, ["Rating"], ascending=[0])[:n]
-        sortedRatings["Title"] = sortedRatings["SongID"].apply(self.getSongByID)
-        return sortedRatings
-
     def generateRecommendations(self, user, n):
         """
         Generates n-number of recommendations for the specified user
@@ -164,7 +171,7 @@ class engine:
         listenedSongs = self.ratingMatrix.transpose()[user].dropna().index  # Get target user's already rated songs
         avgRating = avgRating[~avgRating.index.isin(listenedSongs)]  # Get values of songs that are not rated by target
         recommendations = avgRating.sort_values(ascending=False).index[:n]  # Sort remaining values in descending order
-        reccomendationList = pandas.Series(recommendations).apply(self.getSongByID)  # Pair SongIDs to song metadata
+        reccomendationList = pandas.Series(recommendations).apply(self.getSongData)  # Pair SongIDs to song metadata
 
         # Reformat to basic tuple
         for recommendation in reccomendationList:
@@ -213,7 +220,7 @@ class engine:
         Call this before exiting the program or changes to data will be lost.
         :return:
         """
-        self.userRatings.to_csv('user-song-rating-updated.csv', header=True, sep=";", index=False)  # replace file name with actual user-song-rating
+        self.userRatings.to_csv('user-song-rating.csv', header=True, sep=";", index=False)  # replace file name with actual user-song-rating
         return
 
 
@@ -231,24 +238,27 @@ if __name__ == "__main__":
     #print(engine.userRatings, "\n")
 
     # Generate recommendation for UserId: u1
-    recommendations = engine.generateRecommendations("u1", 3)
+    recommendations = engine.generateRecommendations("newUser", 3)
     print(recommendations, "\n")
 
     # Get User u6 rating for song 125, handle None type return
-    userRatingTest = engine.getUserRating("u6", 125)
+    userRatingTest = engine.getUserRating("marcell", 125)
     if userRatingTest is None:
         print("User has not rated that song yet", "\n")
     else:
         print(userRatingTest.Rating, "\n")
 
     # Update/Add entries to user-song-rating
-    engine.updateUserRating("u1", 101, 5)
+    engine.updateUserRating("adi", 101, 5)
     print(engine.userRatings, "\n")
 
-    engine.updateUserRating("u5", 114, 4)
+    engine.updateUserRating("adi", 114, 4)
     print(engine.userRatings, "\n")
 
     # Save changes to file
     # engine.saveData()
 
-    print(engine.getSongID("Whistle"))
+    songID = engine.getSongID("MONTERO (Call Me By Your Name) - But Lil Nas X Is Silent The Entire Time")
+    print(songID)
+    print(engine.getSongData(songID))
+    #scratch.dance()
