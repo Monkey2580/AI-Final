@@ -20,14 +20,9 @@ df = pd.read_csv("songs-test.csv", sep=',')
 
 
 class Ui_dashboardObject(object):
-
     def update_display(self):
         song_title = self.lineEdit_songSearch.text()
         song_title_lower = song_title.lower()
-        # for song in df.iloc[:, 1].str.lower():
-        #     if song_title_lower in song:
-        #         print('song found')
-        #         break
 
     def logoutUser(self, MainWindow):
         self.recommender.saveData()
@@ -41,50 +36,55 @@ class Ui_dashboardObject(object):
 
     def __init__(self, message):
         self.message = message
-        print('currenct user:'+message)
+        # print('currenct user:'+message)
 
     def setupUi(self, dashboardObject):
         dashboardObject.setObjectName("dashboardObject")
         dashboardObject.resize(800, 600)
+        self.dashboard = dashboardObject
         dashboardObject.setMinimumSize(QtCore.QSize(800, 600))
         dashboardObject.setMaximumSize(QtCore.QSize(800, 600))
-
-        self.dashboard = dashboardObject
-
         self.centralwidget = QtWidgets.QWidget(dashboardObject)
         self.centralwidget.setObjectName("centralwidget")
         self.logout_btn = QtWidgets.QPushButton(self.centralwidget)
         self.logout_btn.setGeometry(QtCore.QRect(690, 10, 93, 41))
-        self.logout_btn.setStyleSheet("border:1px solid black;\n"
-                                      "border-radius:10px;")
+        self.logout_btn.setStyleSheet("border:1px solid white;\n"
+                                      "border-radius:10px;\n"
+                                      "color:white;")
         self.logout_btn.setObjectName("logout_btn")
-
         self.username_label = QtWidgets.QLabel(self.centralwidget)
         self.username_label.setGeometry(QtCore.QRect(550, 10, 121, 41))
-        self.username_label.setStyleSheet("background-color:#c4c4c4;\n"
+        self.username_label.setStyleSheet("background-color:#65D36E;\n"
+                                          "font: 75 9pt \"MS Shell Dlg 2\";\n"
                                           "border-radius:10px;\n"
-                                          "text-align: center;")
+                                          "text-align: center;\n"
+                                          "color: bkack;\n"
+                                          "font-weight:bold;")
         self.username_label.setAlignment(QtCore.Qt.AlignCenter)
         self.username_label.setObjectName("username_label")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
-        self.label_11.setGeometry(QtCore.QRect(-20, 130, 831, 41))
+        self.label_11.setGeometry(QtCore.QRect(-10, 30, 831, 651))
         font = QtGui.QFont()
         font.setPointSize(25)
         font.setBold(True)
         font.setWeight(75)
         self.label_11.setFont(font)
+        self.label_11.setText("")
+        self.label_11.setPixmap(QtGui.QPixmap("ai-homepage.png"))
+        self.label_11.setScaledContents(True)
         self.label_11.setAlignment(QtCore.Qt.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.search_btn = QtWidgets.QPushButton(self.centralwidget)
         self.search_btn.setGeometry(QtCore.QRect(310, 10, 93, 41))
-        self.search_btn.setStyleSheet("border:1px solid black;\n"
-                                      "border-radius:10px;")
+        self.search_btn.setStyleSheet("border:1px solid white;\n"
+                                      "border-radius:10px;\n"
+                                      "color: white;")
         self.search_btn.setObjectName("search_btn")
         self.search_btn.clicked.connect(self.searchSongs)
-
         self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_songSearch.setGeometry(QtCore.QRect(20, 11, 271, 41))
-        mainLayout = QVBoxLayout()
+        self.lineEdit_songSearch.setStyleSheet("border-radius: 15px;\n"
+                                               "padding: 5px;")
         self.lineEdit_songSearch.setObjectName("lineEdit_songSearch")
         self.lineEdit_songSearch.editingFinished.connect(self.update_display)
 
@@ -92,6 +92,18 @@ class Ui_dashboardObject(object):
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.lineEdit_songSearch.setCompleter(self.completer)
 
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(-20, 0, 831, 61))
+        self.label.setStyleSheet("background-color: #000000;\n"
+                                 "border-color:white")
+        self.label.setText("")
+        self.label.setObjectName("label")
+        self.label_11.raise_()
+        self.label.raise_()
+        self.lineEdit_songSearch.raise_()
+        self.search_btn.raise_()
+        self.username_label.raise_()
+        self.logout_btn.raise_()
         dashboardObject.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(dashboardObject)
@@ -105,7 +117,7 @@ class Ui_dashboardObject(object):
         song_title = self.lineEdit_songSearch.text()
         song_title_lower = song_title.lower()
         get_username = self.message
-        print('username will be sent: ' + get_username)
+        # print('username will be sent: ' + get_username)
         self.mainSelectedSong = QtWidgets.QMainWindow()
         self.message = song_title
         self.username = get_username
@@ -122,8 +134,6 @@ class Ui_dashboardObject(object):
         self.logout_btn.setText(_translate("dashboardObject", "LOGOUT"))
         self.username_label.setText(
             _translate("dashboardObject", self.message))
-        self.label_11.setText(_translate(
-            "dashboardObject", "WELCOME TO MAIN DASHBOARD"))
         self.search_btn.setText(_translate("dashboardObject", "SEARCH"))
 
 

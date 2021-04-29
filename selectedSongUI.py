@@ -16,7 +16,6 @@ from recommenderEngine import engine
 
 
 class Ui_mainSelectedSong(object):
-
     def ratingFilledStars(self):
         self.star1.setStyleSheet(
             "qproperty-icon: url(filledStar.png);"
@@ -76,21 +75,6 @@ class Ui_mainSelectedSong(object):
             )
         self.rating = 5
 
-    def __init__(self, message, user, recommender):
-        self.message = message
-        self.user = user
-        self.recommender = recommender
-        # self.recommender.loadData()
-        print('current song:' + message)
-        print('user retrieved: ' + user)
-        # if message in Songs_array:
-        #     print(message.artist)
-        for x in Songs_array:
-            if x.title == message:
-                print(x.artist)
-                self.artist = x.artist
-        self.rating = 0
-
     def logoutUser(self, MainWindow):
         self.recommender.saveData()
         print('data saved')
@@ -101,73 +85,95 @@ class Ui_mainSelectedSong(object):
         self.ui.setupUi(self.MainWindow)
         self.MainWindow.show()
 
-    def setupUi(self, mainSelectedSong):
+    def __init__(self, message, user, recommender):
+        self.message = message
+        self.user = user
+        self.recommender = recommender
+        self.currSongId = recommender.getSongID(self.message)
+        self.songData = recommender.getSongData(self.currSongId)
+        self.albumName = self.songData
+        # self.recommender.loadData()
+        # print('current song:' + message)
+        # print('user retrieved: ' + user)
+        # print(('current album: ' + str(self.albumName[2])))
+        # if message in Songs_array:
+        #     print(message.artist)
+        for x in Songs_array:
+            if x.title == message:
+                print(x.artist)
+                self.artist = x.artist
+        self.rating = 0
 
+    def setupUi(self, mainSelectedSong):
         mainSelectedSong.setObjectName("mainSelectedSong")
         mainSelectedSong.resize(800, 600)
-
         self.selectedPage = mainSelectedSong
-
         self.centralwidget = QtWidgets.QWidget(mainSelectedSong)
         self.centralwidget.setObjectName("centralwidget")
         self.back_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.back_btn.setGeometry(QtCore.QRect(10, 10, 81, 31))
+        self.back_btn.setGeometry(QtCore.QRect(-10, 0, 91, 51))
         self.back_btn.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.back_btn.setAutoFillBackground(False)
         self.back_btn.setStyleSheet("\n"
                                     "border-radius:10px;\n"
                                     " image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/next.png);")
         self.back_btn.setText("")
         icon = QtGui.QIcon()
-
-        icon.addPixmap(QtGui.QPixmap("next.png"),
+        icon.addPixmap(QtGui.QPixmap("next-white.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.back_btn.setIcon(icon)
-        self.back_btn.setIconSize(QtCore.QSize(50, 50))
+        self.back_btn.setIconSize(QtCore.QSize(32, 32))
+        self.back_btn.setCheckable(False)
         self.back_btn.setObjectName("back_btn")
-
         self.label_username = QtWidgets.QLabel(self.centralwidget)
         self.label_username.setGeometry(QtCore.QRect(550, 10, 121, 41))
-        self.label_username.setStyleSheet("background-color:#c4c4c4;\n"
+        self.label_username.setStyleSheet("background-color:#65D36E;\n"
+                                          "font: 75 9pt \"MS Shell Dlg 2\";\n"
                                           "border-radius:10px;\n"
-                                          "text-align: center;")
+                                          "text-align: center;\n"
+                                          "color: bkack;\n"
+                                          "font-weight: bold;")
         self.label_username.setAlignment(QtCore.Qt.AlignCenter)
         self.label_username.setObjectName("label_username")
         self.logout_btn = QtWidgets.QPushButton(self.centralwidget)
         self.logout_btn.setGeometry(QtCore.QRect(690, 10, 93, 41))
-        self.logout_btn.setStyleSheet("border:1px solid black;\n"
-                                      "border-radius:10px;")
+        self.logout_btn.setStyleSheet("border:1px solid white;\n"
+                                      "border-radius:10px;\n"
+                                      "color:white;")
         self.logout_btn.setObjectName("logout_btn")
         self.logout_btn.clicked.connect(self.logoutUser)
         self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_12.setGeometry(QtCore.QRect(50, 120, 351, 281))
+        self.pushButton_12.setAutoFillBackground(False)
+        self.pushButton_12.setStyleSheet("background-color:#000000;")
         self.pushButton_12.setText("")
+        self.pushButton_12.setIconSize(QtCore.QSize(100, 100))
         self.pushButton_12.setObjectName("pushButton_12")
-        self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(420, 110, 301, 41))
+        self.songTitle_label = QtWidgets.QLabel(self.centralwidget)
+        self.songTitle_label.setGeometry(QtCore.QRect(420, 110, 371, 41))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("MS Shell Dlg 2")
+        font.setPointSize(14)
         font.setBold(True)
+        font.setItalic(False)
         font.setWeight(75)
-        self.label_5.setFont(font)
-        self.label_5.setObjectName("label_5")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(420, 150, 311, 16))
+        self.songTitle_label.setFont(font)
+        self.songTitle_label.setStyleSheet("font: 75 14pt \"MS Shell Dlg 2\";\n"
+                                           "font-weight:bold;\n"
+                                           "color:white;")
+        self.songTitle_label.setObjectName("songTitle_label")
+        self.artistName_label = QtWidgets.QLabel(self.centralwidget)
+        self.artistName_label.setGeometry(QtCore.QRect(420, 160, 361, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
+        self.artistName_label.setFont(font)
+        self.artistName_label.setObjectName("artistName_label")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(420, 200, 91, 16))
+        self.label_3.setGeometry(QtCore.QRect(420, 190, 361, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(420, 220, 91, 16))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.label_4.setFont(font)
-        self.label_4.setObjectName("label_4")
         self.star5 = QtWidgets.QPushButton(self.centralwidget)
         self.star5.setGeometry(QtCore.QRect(490, 270, 31, 16))
         self.star5.setStyleSheet("\n"
@@ -206,15 +212,58 @@ class Ui_mainSelectedSong(object):
         self.star2.setText("")
         self.star2.setIcon(icon1)
         self.star2.setObjectName("star2")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, -10, 831, 71))
+        self.label.setStyleSheet("background-color: #000000;\n"
+                                 "border-color:white")
+        self.label.setText("")
+        self.label.setObjectName("label")
+        self.label_11 = QtWidgets.QLabel(self.centralwidget)
+        self.label_11.setGeometry(QtCore.QRect(-20, -50, 831, 651))
+        font = QtGui.QFont()
+        font.setPointSize(25)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_11.setFont(font)
+        self.label_11.setText("")
+        self.label_11.setPixmap(QtGui.QPixmap("ai-background.png"))
+        self.label_11.setScaledContents(True)
+        self.label_11.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_11.setObjectName("label_11")
+        self.albumName_label = QtWidgets.QLabel(self.centralwidget)
+        self.albumName_label.setGeometry(QtCore.QRect(420, 220, 361, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.albumName_label.setFont(font)
+        self.albumName_label.setObjectName("albumName_label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(60, 130, 331, 261))
+        self.label_2.setStyleSheet("border-radius:15px;")
+        self.label_2.setText("")
+        self.label_2.setPixmap(QtGui.QPixmap("song-bg.png"))
+        self.label_2.setScaledContents(True)
+        self.label_2.setObjectName("label_2")
+        self.label_11.raise_()
+        self.label.raise_()
+        self.back_btn.raise_()
+        self.label_username.raise_()
+        self.logout_btn.raise_()
+        self.pushButton_12.raise_()
+        self.songTitle_label.raise_()
+        self.artistName_label.raise_()
+        self.label_3.raise_()
+        self.star5.raise_()
+        self.star3.raise_()
+        self.star1.raise_()
+        self.star4.raise_()
+        self.star2.raise_()
+        self.albumName_label.raise_()
+        self.label_2.raise_()
         mainSelectedSong.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(mainSelectedSong)
-        self.statusbar.setObjectName("statusbar")
-        mainSelectedSong.setStatusBar(self.statusbar)
 
         self.retranslateUi(mainSelectedSong)
         QtCore.QMetaObject.connectSlotsByName(mainSelectedSong)
         self.back_btn.clicked.connect(self.goToHomePageHis)
-
         self.star1.clicked.connect(self.ratingFilledStars)
         self.star2.clicked.connect(self.ratingFilledStars2)
         self.star3.clicked.connect(self.ratingFilledStars3)
@@ -222,9 +271,6 @@ class Ui_mainSelectedSong(object):
         self.star5.clicked.connect(self.ratingFilledStar5)
         self.stars = [self.star1, self.star2,
                       self.star3, self.star4, self.star5]
-        # self.recommender = engine()
-        # self.recommender.loadData()
-        
         self.recommender.buildRatingMatrix()
 
     def goToHomePageHis(self, homePageHisWindow):
@@ -240,10 +286,9 @@ class Ui_mainSelectedSong(object):
         self.ui.setupUi(self.homePageHisWindow)
         self.selectedPage.hide()
         self.homePageHisWindow.show()
-        print('rating lagunya: ' + str(self.rating))
-        print('lagu yang dipilih: ' + self.message)
+        # print('rating lagunya: ' + str(self.rating))
+        # print('lagu yang dipilih: ' + self.message)
         self.recommender.saveData()
-        print('DATA INI UDAH KESIMPEN')
 
     def retranslateUi(self, mainSelectedSong):
         _translate = QtCore.QCoreApplication.translate
@@ -251,10 +296,13 @@ class Ui_mainSelectedSong(object):
             _translate("mainSelectedSong", "MainWindow"))
         self.label_username.setText(_translate("mainSelectedSong", self.user))
         self.logout_btn.setText(_translate("mainSelectedSong", "LOGOUT"))
-        self.label_5.setText(_translate("mainSelectedSong", self.message))
-        self.label_2.setText(_translate("mainSelectedSong", self.artist))
-        self.label_3.setText(_translate("mainSelectedSong", "Album"))
-        self.label_4.setText(_translate("mainSelectedSong", "Duration"))
+        self.songTitle_label.setText(
+            _translate("mainSelectedSong", self.message))
+        self.artistName_label.setText(
+            _translate("mainSelectedSong", self.artist))
+        self.label_3.setText(_translate("mainSelectedSong", "Album:"))
+        self.albumName_label.setText(
+            _translate("mainSelectedSong", self.albumName[2]))
 
 
 if __name__ == "__main__":

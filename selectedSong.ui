@@ -17,14 +17,17 @@
    <widget class="QPushButton" name="back_btn">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>81</width>
-      <height>31</height>
+      <x>-10</x>
+      <y>0</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
      <string notr="true">
@@ -36,13 +39,16 @@ border-radius:10px;
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>next.png</normaloff>next.png</iconset>
+      <normaloff>next-white.png</normaloff>next-white.png</iconset>
     </property>
     <property name="iconSize">
      <size>
-      <width>50</width>
-      <height>50</height>
+      <width>32</width>
+      <height>32</height>
      </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_username">
@@ -55,9 +61,12 @@ border-radius:10px;
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#c4c4c4;
+     <string notr="true">background-color:#65D36E;
+font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 border-radius:10px;
-text-align: center;</string>
+text-align: center;
+color: bkack;
+font-weight: bold;</string>
     </property>
     <property name="text">
      <string>USER</string>
@@ -76,8 +85,9 @@ text-align: center;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:1px solid black;
-border-radius:10px;</string>
+     <string notr="true">border:1px solid white;
+border-radius:10px;
+color:white;</string>
     </property>
     <property name="text">
      <string>LOGOUT</string>
@@ -92,36 +102,55 @@ border-radius:10px;</string>
       <height>281</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#000000;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
+    <property name="iconSize">
+     <size>
+      <width>100</width>
+      <height>100</height>
+     </size>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="songTitle_label">
     <property name="geometry">
      <rect>
       <x>420</x>
       <y>110</y>
-      <width>301</width>
+      <width>371</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>14</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;;
+font-weight:bold;
+color:white;</string>
     </property>
     <property name="text">
      <string>Song Tittle</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="artistName_label">
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>150</y>
-      <width>311</width>
+      <y>160</y>
+      <width>361</width>
       <height>16</height>
      </rect>
     </property>
@@ -138,8 +167,8 @@ border-radius:10px;</string>
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>200</y>
-      <width>91</width>
+      <y>190</y>
+      <width>361</width>
       <height>16</height>
      </rect>
     </property>
@@ -149,25 +178,7 @@ border-radius:10px;</string>
      </font>
     </property>
     <property name="text">
-     <string>Album</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>220</y>
-      <width>91</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Duration</string>
+     <string>Album:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="star5">
@@ -275,8 +286,109 @@ background-color:transparent;</string>
       <normaloff>emptyStar.png</normaloff>emptyStar.png</iconset>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-10</y>
+      <width>831</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #000000;
+border-color:white</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>-50</y>
+      <width>831</width>
+      <height>651</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>ai-background.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="albumName_label">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>220</y>
+      <width>361</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Album Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>130</y>
+      <width>331</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius:15px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>song-bg.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <zorder>label_11</zorder>
+   <zorder>label</zorder>
+   <zorder>back_btn</zorder>
+   <zorder>label_username</zorder>
+   <zorder>logout_btn</zorder>
+   <zorder>pushButton_12</zorder>
+   <zorder>songTitle_label</zorder>
+   <zorder>artistName_label</zorder>
+   <zorder>label_3</zorder>
+   <zorder>star5</zorder>
+   <zorder>star3</zorder>
+   <zorder>star1</zorder>
+   <zorder>star4</zorder>
+   <zorder>star2</zorder>
+   <zorder>albumName_label</zorder>
+   <zorder>label_2</zorder>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

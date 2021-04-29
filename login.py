@@ -80,15 +80,6 @@ class Ui_MainWindow(object):
                 self.dashboardObject.show()
                 break
 
-        # if username == 'adit':
-        #     self.dashboardObject = QtWidgets.QMainWindow()
-        #     self.message = username
-        #     self.ui = Ui_dashboardObject(self.message)
-        #     self.ui.setupUi(self.dashboardObject)
-        #     self.dashboardObject.show()
-        # else:
-        #     print('username not found')
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

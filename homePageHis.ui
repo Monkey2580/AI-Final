@@ -39,9 +39,12 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#c4c4c4;
+     <string notr="true">background-color:#65D36E;
+font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 border-radius:10px;
-text-align: center;</string>
+text-align: center;
+color: bkack;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string>USER</string>
@@ -60,8 +63,9 @@ text-align: center;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:1px solid black;
-border-radius:10px;</string>
+     <string notr="true">border:1px solid white;
+border-radius:10px;
+color:white;</string>
     </property>
     <property name="text">
      <string>LOGOUT</string>
@@ -72,16 +76,23 @@ border-radius:10px;</string>
      <rect>
       <x>30</x>
       <y>60</y>
-      <width>101</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+color: white;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string>History</string>
@@ -92,16 +103,24 @@ border-radius:10px;</string>
      <rect>
       <x>30</x>
       <y>250</y>
-      <width>131</width>
+      <width>191</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+color: white;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string>Made For You</string>
@@ -116,6 +135,11 @@ border-radius:10px;</string>
       <height>101</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#000000;
+color: white;
+font-weight:bold;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -128,6 +152,10 @@ border-radius:10px;</string>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string/>
@@ -142,6 +170,10 @@ border-radius:10px;</string>
       <height>101</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -154,6 +186,10 @@ border-radius:10px;</string>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string/>
@@ -168,6 +204,10 @@ border-radius:10px;</string>
       <height>101</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -180,6 +220,10 @@ border-radius:10px;</string>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string/>
@@ -194,6 +238,10 @@ border-radius:10px;</string>
       <height>101</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -207,6 +255,10 @@ border-radius:10px;</string>
       <height>101</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -219,6 +271,10 @@ border-radius:10px;</string>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#65D36E;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string/>
@@ -338,6 +394,10 @@ background-color:transparent;</string>
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 15px;
+padding: 5px;</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="search_btn">
     <property name="geometry">
@@ -349,25 +409,83 @@ background-color:transparent;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:1px solid black;
-border-radius:10px;</string>
+     <string notr="true">border:1px solid white;
+border-radius:10px;
+color: white;</string>
     </property>
     <property name="text">
      <string>SEARCH</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>-10</y>
+      <width>831</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #000000;
+border-color:white</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>-60</y>
+      <width>831</width>
+      <height>651</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>ai-background.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label_11</zorder>
+   <zorder>label</zorder>
+   <zorder>username_label</zorder>
+   <zorder>logout_btn</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_4</zorder>
+   <zorder>history_btn</zorder>
+   <zorder>recommendedSong_1</zorder>
+   <zorder>recommendedSong_2</zorder>
+   <zorder>recommendedSong_3</zorder>
+   <zorder>recommendedSong_4</zorder>
+   <zorder>recommendedSong_5</zorder>
+   <zorder>recommendedSong_8</zorder>
+   <zorder>recommendedSong_6</zorder>
+   <zorder>recommendedSong_7</zorder>
+   <zorder>star1</zorder>
+   <zorder>star2</zorder>
+   <zorder>star3</zorder>
+   <zorder>star4</zorder>
+   <zorder>star5</zorder>
+   <zorder>lineEdit_songSearch</zorder>
+   <zorder>search_btn</zorder>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

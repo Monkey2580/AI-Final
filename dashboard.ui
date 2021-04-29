@@ -36,8 +36,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:1px solid black;
-border-radius:10px;</string>
+     <string notr="true">border:1px solid white;
+border-radius:10px;
+color:white;</string>
     </property>
     <property name="text">
      <string>LOGOUT</string>
@@ -53,9 +54,12 @@ border-radius:10px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#c4c4c4;
+     <string notr="true">background-color:#65D36E;
+font: 75 9pt &quot;MS Shell Dlg 2&quot;;
 border-radius:10px;
-text-align: center;</string>
+text-align: center;
+color: bkack;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string>USER</string>
@@ -67,10 +71,10 @@ text-align: center;</string>
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>-20</x>
-      <y>130</y>
+      <x>-10</x>
+      <y>30</y>
       <width>831</width>
-      <height>41</height>
+      <height>651</height>
      </rect>
     </property>
     <property name="font">
@@ -81,7 +85,13 @@ text-align: center;</string>
      </font>
     </property>
     <property name="text">
-     <string>WELCOME TO MAIN DASHBOARD</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>ai-homepage.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -97,8 +107,9 @@ text-align: center;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:1px solid black;
-border-radius:10px;</string>
+     <string notr="true">border:1px solid white;
+border-radius:10px;
+color: white;</string>
     </property>
     <property name="text">
      <string>SEARCH</string>
@@ -113,7 +124,34 @@ border-radius:10px;</string>
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 15px;
+padding: 5px;</string>
+    </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>0</y>
+      <width>831</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #000000;
+border-color:white</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>label_11</zorder>
+   <zorder>label</zorder>
+   <zorder>lineEdit_songSearch</zorder>
+   <zorder>search_btn</zorder>
+   <zorder>username_label</zorder>
+   <zorder>logout_btn</zorder>
   </widget>
  </widget>
  <resources/>
