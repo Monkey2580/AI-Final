@@ -96,13 +96,45 @@ class Ui_homePageHisWindow(object):
         font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
-        self.history_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.history_btn.setGeometry(QtCore.QRect(30, 100, 111, 101))
-        self.history_btn.setText("")
-        self.history_btn.setObjectName("history_btn")
+        # self.history_btn = QtWidgets.QPushButton(self.centralwidget)
+        # self.history_btn.setGeometry(QtCore.QRect(30, 100, 111, 101))
+        # self.history_btn.setText("")
+        # self.history_btn.setObjectName("history_btn")
         # self.recommendedSong_1 = QtWidgets.QPushButton(self.centralwidget)
         # self.recommendedSong_1.setGeometry(QtCore.QRect(30, 290, 111, 101))
         # self.recommendedSong_1.setText("")
+
+        self.history_btn1 = QtWidgets.QPushButton(self.centralwidget)
+        self.history_btn2 = QtWidgets.QPushButton(self.centralwidget)
+        self.history_btn3 = QtWidgets.QPushButton(self.centralwidget)
+        self.history_btn4 = QtWidgets.QPushButton(self.centralwidget)
+        self.history_btn5 = QtWidgets.QPushButton(self.centralwidget)
+        self.star1 = QtWidgets.QPushButton(self.centralwidget)
+        self.star2 = QtWidgets.QPushButton(self.centralwidget)
+        self.star3 = QtWidgets.QPushButton(self.centralwidget)
+        self.star4 = QtWidgets.QPushButton(self.centralwidget)
+        self.star5 = QtWidgets.QPushButton(self.centralwidget)
+        self.star6 = QtWidgets.QPushButton(self.centralwidget)
+        self.star7 = QtWidgets.QPushButton(self.centralwidget)
+        self.star8 = QtWidgets.QPushButton(self.centralwidget)
+        self.star9 = QtWidgets.QPushButton(self.centralwidget)
+        self.star10 = QtWidgets.QPushButton(self.centralwidget)
+        self.star11 = QtWidgets.QPushButton(self.centralwidget)
+        self.star12 = QtWidgets.QPushButton(self.centralwidget)
+        self.star13 = QtWidgets.QPushButton(self.centralwidget)
+        self.star14 = QtWidgets.QPushButton(self.centralwidget)
+        self.star15 = QtWidgets.QPushButton(self.centralwidget)
+        self.star16 = QtWidgets.QPushButton(self.centralwidget)
+        self.star17 = QtWidgets.QPushButton(self.centralwidget)
+        self.star18 = QtWidgets.QPushButton(self.centralwidget)
+        self.star19 = QtWidgets.QPushButton(self.centralwidget)
+        self.star20 = QtWidgets.QPushButton(self.centralwidget)
+
+        hisStarsFirst = [self.star1, self.star2, self.star3, self.star4, self.star5]
+        hisStarsSecond = [self.star6, self.star7, self.star8, self.star9, self.star10]
+        hisStarsThird = [self.star11, self.star12, self.star13, self.star14, self.star15]
+        hisStarsFourth = [self.star16, self.star17, self.star18, self.star19, self.star20]
+        hisPict = [self.history_btn1, self.history_btn2, self.history_btn3, self.history_btn4]
 
         self.recommendedSong_1 = QtWidgets.QPushButton(self.centralwidget)
         self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
@@ -146,7 +178,7 @@ class Ui_homePageHisWindow(object):
 
         if (len(self.hasil_rekomendasi) > 4):
             for y in range(len(allButtonSecondRow)):
-                if(len(self.hasil_rekomendasi)-1 <= secondRowCounter):
+                if(len(self.hasil_rekomendasi) <= secondRowCounter):
                     break
                 allButtonSecondRow[y].setGeometry(
                     QtCore.QRect(geoRowSecond, 400, 111, 101))
@@ -161,6 +193,129 @@ class Ui_homePageHisWindow(object):
                 secondRowCounter += 1
 
         print(self.recommender.userRatings)
+
+        selectedSongs = []  # disini wadah untuk nyimpen songs yg udah ke select
+        selectedSongs.append(self.message)
+        if (len(selectedSongs) > 4):
+            selectedSongs.pop(-1);
+
+        rates = self.songRating
+
+        listSelectedSongs = {}
+
+        def getSelectedSong(rating):
+            for x in selectedSongs:
+                name = str(x)
+                rate = int(rating)
+                tempArr = []
+                tempArr.append(name)
+                tempArr.append(rate)
+                listSelectedSongs[x] = tempArr
+            return listSelectedSongs
+        print(getSelectedSong(rates))
+        test = getSelectedSong(rates)
+        print(test[selectedSongs[0]][1])
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("filledStar.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+
+        def loopFirstStars(rates):
+            counterStars = 1;
+            rowStarsHis = 28
+            dataSelectedSongs = getSelectedSong(rates)
+
+            for x in range(dataSelectedSongs[selectedSongs[0]][1]):
+                hisStarsFirst[x].setGeometry(QtCore.QRect(rowStarsHis, 210, 31, 16))
+                rowStarsHis += 20;
+                hisStarsFirst[x].setStyleSheet(
+                    "image: url(filledStar.png);\n"
+                    "background-color:transparent;")
+                hisStarsFirst[x].setText("")
+                hisStarsFirst[x].setIcon(icon)
+                hisStarsFirst[x].setObjectName("star" + str(counterStars))
+                # allButtonFirstRow[x].setObjectName(
+                #     "recommendedSong_" + str(firstRowCounter))
+                counterStars = counterStars + 1;
+
+            self.history_btn1.setGeometry(QtCore.QRect(30, 100, 111, 101))
+            self.history_btn1.setText(dataSelectedSongs[selectedSongs[0]][0])
+            self.history_btn1.setObjectName("history_btn1")
+        def loopSecStars(rates):
+            counterStarsSec = 6;
+            rowStarsHisSec = 150;
+            dataSelectedSongs = getSelectedSong(rates)
+            for x in range(dataSelectedSongs[selectedSongs[0]][1]):
+                hisStarsSecond[x].setGeometry(QtCore.QRect(rowStarsHisSec, 210, 31, 16))
+                rowStarsHisSec += 20;
+                hisStarsSecond[x].setStyleSheet(
+                    "image: url(filledStar.png);\n"
+                    "background-color:transparent;")
+                hisStarsSecond[x].setText("")
+                hisStarsSecond[x].setIcon(icon)
+                hisStarsSecond[x].setObjectName("star" + str(counterStarsSec))
+                # allButtonFirstRow[x].setObjectName(
+                #     "recommendedSong_" + str(firstRowCounter))
+                counterStarsSec = counterStarsSec + 1;
+            self.history_btn2.setGeometry(QtCore.QRect(150, 100, 111, 101))
+            self.history_btn2.setText(dataSelectedSongs[selectedSongs[1]][0])
+            self.history_btn2.setObjectName("history_btn2")
+
+        def loopThirdStars(rates):
+            counterStarsThird = 6;
+            rowStarsHisThird = 270;
+            dataSelectedSongs = getSelectedSong(rates)
+            for x in range(dataSelectedSongs[selectedSongs[0]][1]):
+                hisStarsThird[x].setGeometry(QtCore.QRect(rowStarsHisThird, 210, 31, 16))
+                rowStarsHisThird += 20;
+                hisStarsThird[x].setStyleSheet(
+                    "image: url(filledStar.png);\n"
+                    "background-color:transparent;")
+                hisStarsThird[x].setText("")
+                hisStarsThird[x].setIcon(icon)
+                hisStarsThird[x].setObjectName("star" + str(counterStarsThird))
+                # allButtonFirstRow[x].setObjectName(
+                #     "recommendedSong_" + str(firstRowCounter))
+                counterStarsThird = counterStarsThird + 1;
+            self.history_btn3.setGeometry(QtCore.QRect(270, 100, 111, 101))
+            self.history_btn3.setText(dataSelectedSongs[selectedSongs[2]][0])
+            self.history_btn3.setObjectName("history_btn3")
+        def loopFourthStars(rates):
+            counterStarsFourth = 11;
+            rowStarsHisFourth = 390;
+            dataSelectedSongs = getSelectedSong(rates)
+            for x in range(dataSelectedSongs[selectedSongs[0]][1]):
+                hisStarsFourth[x].setGeometry(QtCore.QRect(rowStarsHisFourth, 210, 31, 16))
+                rowStarsHisFourth += 20;
+                hisStarsFourth[x].setStyleSheet(
+                    " image: url(filledStar.png);\n"
+                    "background-color:transparent;")
+                hisStarsFourth[x].setText("")
+                hisStarsFourth[x].setIcon(icon)
+                hisStarsFourth[x].setObjectName("star" + str(counterStarsFourth))
+                # allButtonFirstRow[x].setObjectName(
+                #     "recommendedSong_" + str(firstRowCounter))
+                counterStarsFourth = counterStarsFourth + 1;
+
+            self.history_btn4.setGeometry(QtCore.QRect(390, 100, 111, 101))
+            self.history_btn4.setText(dataSelectedSongs[selectedSongs[3]][0])
+            self.history_btn4.setObjectName("history_btn4")
+        if (len(selectedSongs) == 1):
+
+            loopFirstStars(rates);
+
+        elif (len(selectedSongs) == 2):
+            loopFirstStars(rates)
+            loopSecStars(rates)
+        elif (len(selectedSongs) == 3):
+            loopFirstStars(rates)
+            loopSecStars(rates)
+            loopThirdStars(rates)
+        elif (len(selectedSongs) == 4):
+            loopFirstStars(rates)
+            loopSecStars(rates)
+            loopThirdStars(rates)
+            loopFourthStars(rates)
         # self.recommendedSong_1.setObjectName("recommendedSong_1")
         # self.recommendedSong_2 = QtWidgets.QPushButton(self.centralwidget)
         # self.recommendedSong_2.setGeometry(QtCore.QRect(150, 290, 111, 101))
@@ -190,44 +345,44 @@ class Ui_homePageHisWindow(object):
         # self.recommendedSong_7.setGeometry(QtCore.QRect(270, 400, 111, 101))
         # self.recommendedSong_7.setText("")
         # self.recommendedSong_7.setObjectName("recommendedSong_7")
-        self.star1 = QtWidgets.QPushButton(self.centralwidget)
-        self.star1.setGeometry(QtCore.QRect(30, 210, 31, 16))
-        self.star1.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-                                 "background-color:transparent;")
-        self.star1.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("emptyStar.png"),
-                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.star1.setIcon(icon)
-        self.star1.setObjectName("star1")
-        self.star2 = QtWidgets.QPushButton(self.centralwidget)
-        self.star2.setGeometry(QtCore.QRect(50, 210, 31, 16))
-        self.star2.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-                                 "background-color:transparent;")
-        self.star2.setText("")
-        self.star2.setIcon(icon)
-        self.star2.setObjectName("star2")
-        self.star3 = QtWidgets.QPushButton(self.centralwidget)
-        self.star3.setGeometry(QtCore.QRect(70, 210, 31, 16))
-        self.star3.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-                                 "background-color:transparent;")
-        self.star3.setText("")
-        self.star3.setIcon(icon)
-        self.star3.setObjectName("star3")
-        self.star4 = QtWidgets.QPushButton(self.centralwidget)
-        self.star4.setGeometry(QtCore.QRect(90, 210, 31, 16))
-        self.star4.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-                                 "background-color:transparent;")
-        self.star4.setText("")
-        self.star4.setIcon(icon)
-        self.star4.setObjectName("star4")
-        self.star5 = QtWidgets.QPushButton(self.centralwidget)
-        self.star5.setGeometry(QtCore.QRect(110, 210, 31, 16))
-        self.star5.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
-                                 "background-color:transparent;")
-        self.star5.setText("")
-        self.star5.setIcon(icon)
-        self.star5.setObjectName("star5")
+        # self.star1 = QtWidgets.QPushButton(self.centralwidget)
+        # self.star1.setGeometry(QtCore.QRect(30, 210, 31, 16))
+        # self.star1.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
+        #                          "background-color:transparent;")
+        # self.star1.setText("")
+        # icon = QtGui.QIcon()
+        # icon.addPixmap(QtGui.QPixmap("emptyStar.png"),
+        #                QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # self.star1.setIcon(icon)
+        # self.star1.setObjectName("star1")
+        # self.star2 = QtWidgets.QPushButton(self.centralwidget)
+        # self.star2.setGeometry(QtCore.QRect(50, 210, 31, 16))
+        # self.star2.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
+        #                          "background-color:transparent;")
+        # self.star2.setText("")
+        # self.star2.setIcon(icon)
+        # self.star2.setObjectName("star2")
+        # self.star3 = QtWidgets.QPushButton(self.centralwidget)
+        # self.star3.setGeometry(QtCore.QRect(70, 210, 31, 16))
+        # self.star3.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
+        #                          "background-color:transparent;")
+        # self.star3.setText("")
+        # self.star3.setIcon(icon)
+        # self.star3.setObjectName("star3")
+        # self.star4 = QtWidgets.QPushButton(self.centralwidget)
+        # self.star4.setGeometry(QtCore.QRect(90, 210, 31, 16))
+        # self.star4.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
+        #                          "background-color:transparent;")
+        # self.star4.setText("")
+        # self.star4.setIcon(icon)
+        # self.star4.setObjectName("star4")
+        # self.star5 = QtWidgets.QPushButton(self.centralwidget)
+        # self.star5.setGeometry(QtCore.QRect(110, 210, 31, 16))
+        # self.star5.setStyleSheet(" image: url(D:/College Stuff/Semester 8/Artificial Intelligence/FinalAI/emptyStar.png);\n"
+        #                          "background-color:transparent;")
+        # self.star5.setText("")
+        # self.star5.setIcon(icon)
+        # self.star5.setObjectName("star5")
         self.lineEdit_songSearch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_songSearch.setGeometry(QtCore.QRect(30, 10, 271, 41))
         self.lineEdit_songSearch.setObjectName("lineEdit_songSearch")
